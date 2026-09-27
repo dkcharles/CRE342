@@ -1,0 +1,1365 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRE342 Week 2: Flow and Immersion</title>
+<link rel="stylesheet" href="../lib/reset.css">
+<link rel="stylesheet" href="../lib/reveal.css">
+<link rel="stylesheet" href="../lib/cre342.css">
+<style>
+  /* Slide-specific styles for this week */
+  .bartle-q { fill: var(--panel); stroke: var(--line); stroke-width: 1.5; }
+  .ax { stroke: var(--muted); stroke-width: 2; fill: none; }
+  .ax-label { fill: var(--muted); font-family: var(--mono) !important; font-size: 17px; letter-spacing: .12em; text-transform: uppercase; }
+  .said-did { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .said-did .card .big { font-size: 40px; }
+  .mda { display: grid; grid-template-columns: 1fr 60px 1fr 60px 1fr; align-items: stretch; }
+  .mda .card { text-align: left; }
+  .mda .letter { font-family: var(--display); font-size: 120px; font-weight: 700; line-height: .9; color: var(--blue); display: block; margin-bottom: 12px; }
+  .mda .arrow { display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 40px; }
+  .dir { display: grid; grid-template-columns: 170px 1fr; gap: 14px 22px; align-items: center; margin-top: 34px; }
+  .dir .who { font-family: var(--mono); font-size: 18px; letter-spacing: .12em; text-transform: uppercase; }
+  .dir .bar { height: 46px; border-radius: 10px; display: flex; align-items: center; padding: 0 22px; font-size: 22px; }
+  .dir .bar.designer { background: linear-gradient(90deg, var(--blue-deep), rgba(58,168,255,.15)); }
+  .dir .bar.player { background: linear-gradient(270deg, #b54848, rgba(255,107,107,.12)); justify-content: flex-end; }
+  .game-row { display: grid; grid-template-columns: 150px 1fr 1fr 1fr; gap: 22px; align-items: center; margin-bottom: 18px; }
+  .game-row .cover { height: 150px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--panel); }
+  .game-row .cover img { width: 100%; height: 100%; object-fit: cover; margin: 0; display: block; }
+  .game-row .cell { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; font-size: 24px; color: var(--ink-2); height: 150px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; }
+  .game-row .cell b { display: block; font-family: var(--display); font-size: 28px; color: var(--ink); margin-bottom: 6px; font-weight: 600; }
+  .game-head { display: grid; grid-template-columns: 150px 1fr 1fr 1fr; gap: 22px; margin-bottom: 12px; }
+  .game-head span { font-family: var(--mono); font-size: 17px; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; padding-left: 4px; }
+  .cond { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .cond .card { padding: 22px 24px; }
+  .cond .card h4 { font-size: 26px; }
+  .cond .card p { font-size: 21px; margin: 0; }
+  .reveal .card-break td:first-child { white-space: nowrap; }
+  .cond .card .watch { display: block; font-size: 18px; color: var(--gold); margin-top: 10px; font-family: var(--mono); }
+  .stages { display: grid; grid-template-columns: 1fr 70px 1fr 70px 1fr; align-items: stretch; }
+  .stages .gate { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .stages .gate .bar { width: 10px; height: 150px; border-radius: 5px; background: repeating-linear-gradient(180deg, var(--coral) 0 14px, transparent 14px 24px); }
+  .stages .card .big { font-size: 36px; }
+  .barrier { font-size: 21px !important; color: var(--coral) !important; margin-top: 12px; }
+  .quad { display: grid; grid-template-columns: 60px 1fr 1fr; grid-template-rows: 1fr 1fr 50px; gap: 16px; height: 600px; }
+  .quad .card { padding: 22px 26px; }
+  .quad .card h3 { font-size: 32px; margin-bottom: 8px; }
+  .quad .card p { font-size: 22px; margin: 0 0 6px; }
+  .quad .ylab { writing-mode: vertical-rl; transform: rotate(180deg); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 16px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .quad .xlab { display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 16px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .levers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+  .levers .card { padding: 22px; }
+  .levers .card h4 { font-size: 24px; }
+  .levers .card p { font-size: 20px; }
+  .timeline-legend { display: flex; gap: 26px; font-size: 20px; color: var(--ink-2); margin-top: 14px; }
+  .timeline-legend span::before { content: ""; display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 8px; vertical-align: -1px; background: currentColor; }
+  .order { display: grid; grid-template-columns: 190px repeat(4, 1fr); gap: 14px; align-items: center; margin-bottom: 18px; }
+  .order .lab { font-family: var(--mono); font-size: 18px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .order .blk { border-radius: 12px; padding: 16px 20px; border: 1px solid var(--line); background: var(--panel); font-size: 22px; }
+  .order .blk b { display: block; font-family: var(--display); font-size: 26px; }
+  .order .blk.c { border-color: var(--coral); background: var(--coral-soft); }
+  .measure td:nth-child(2) { color: var(--ink) !important; }
+  .formula { font-family: var(--mono); font-size: 25px; color: var(--ink); background: #070b1c; border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; }
+  .formula .lab { display: block; font-family: var(--body); font-size: 18px; color: var(--muted); margin-bottom: 4px; letter-spacing: 0; }
+  .station { padding: 20px 22px !important; }
+  .station h4 { font-size: 26px; }
+  .station p { font-size: 20px !important; margin: 6px 0 10px !important; }
+  .busker-wrap { position: relative; }
+  .busker-wrap img { width: 100%; border-radius: 16px; border: 1px solid var(--line); display: block; margin: 0; }
+  .key-list { list-style: none; padding: 0 !important; margin: 0; }
+  .key-list li { display: grid; grid-template-columns: 38px 1fr; gap: 12px; font-size: 22px; margin-bottom: 11px; color: var(--ink-2); }
+  .key-list .k { width: 32px; height: 32px; border-radius: 50%; background: var(--gold); color: #1a1400; font-weight: 700; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+  .refs p { font-size: 17px; line-height: 1.35; margin-bottom: 9px; color: var(--ink-2); padding-left: 1.4em; text-indent: -1.4em; }
+  .bars-note { font-size: 19px; color: var(--muted); }
+  .chart text { font-family: var(--body); }
+  .chart .tick { fill: var(--muted); font-size: 17px; font-family: var(--mono) !important; }
+  .chart .grid { stroke: rgba(141,152,191,.18); stroke-width: 1; }
+  .chart .val { fill: var(--ink); font-size: 22px; font-weight: 600; }
+  .chart .cat { fill: var(--ink-2); font-size: 20px; }
+  .chart rect.bar:hover { opacity: .8; }
+  .exit-ticket { font-family: var(--display); font-size: 60px; line-height: 1.15; letter-spacing: -.02em; }
+  .exit-ticket .blank { color: var(--gold); border-bottom: 4px dashed var(--gold); padding: 0 10px; }
+</style>
+</head>
+<body>
+<div class="deck-chrome" id="chrome"><span class="l">CRE342 · Week 2</span><span class="r" id="chrome-section"></span></div>
+<div class="reveal">
+<div class="slides">
+
+<!-- ========================================================= TITLE -->
+<section class="title-slide center-v" data-chrome="off">
+  <img src="img/ulster-logo-white.png" alt="Ulster University" style="width:120px;margin:0 0 40px;opacity:.9">
+  <span class="course">CRE342 · Game Mechanics &amp; Gameplay Design · Week 2</span>
+  <h1>Flow, immersion<br>&amp; <span class="hl">what breaks them</span></h1>
+  <p class="lead">Game mechanics and player engagement</p>
+  <p class="small mt-m">BSc (Hons) Game Design &amp; Development</p>
+</section>
+
+<!-- ========================================================= HOOK -->
+<section class="center-v" data-section="Warm-up">
+  <span class="prompt-badge"><span class="dot"></span>Think · 30 seconds</span>
+  <h2 style="font-size:84px;max-width:1300px">When did a game last steal an hour from you?</h2>
+  <p class="lead fragment rise">…and what pulled you back out?</p>
+  <div class="mt-m fragment rise"><span class="timer" data-seconds="30">0:30</span> <span class="small" style="margin-left:14px">click to start · tell the person next to you</span></div>
+</section>
+
+<!-- ========================================================= OUTCOMES -->
+<section data-section="Today">
+  <span class="kicker">Today</span>
+  <h2>By the end of today you can…</h2>
+  <div class="grid-2 mt-m" style="gap:24px">
+    <div class="card blue fragment rise"><span class="num">01</span><h3>Explain flow</h3><p>using the challenge–skill channel, and name at least four of its conditions.</p></div>
+    <div class="card mint fragment rise"><span class="num">02</span><h3>Distinguish immersion</h3><p>sensory, challenge-based and imaginative, and the barriers that block each.</p></div>
+    <div class="card coral fragment rise"><span class="num">03</span><h3>Classify distractors</h3><p>and predict which ones break flow for which player type and genre.</p></div>
+    <div class="card gold fragment rise"><span class="num">04</span><h3>Design a simple test</h3><p>with a baseline, a manipulation and a self-report measure.</p></div>
+  </div>
+</section>
+
+<section data-section="Today">
+  <span class="kicker">The route</span>
+  <h2>Six stops</h2>
+  <div class="grid-3 mt-s" style="gap:22px">
+    <div class="card"><span class="tag">01</span><h4>Last week, revisited</h4><p>Player types, SDT, motivation</p></div>
+    <div class="card"><span class="tag">02</span><h4>Mechanics → experience</h4><p>MDA, Schell's tetrad, core loops</p></div>
+    <div class="card blue"><span class="tag">03</span><h4>Flow &amp; immersion</h4><p>The channel, presence, agency, and how they differ</p></div>
+    <div class="card coral"><span class="tag">04</span><h4>Breaking &amp; protecting it</h4><p>Distractors, difficulty, skill matching</p></div>
+    <div class="card gold"><span class="tag">05</span><h4>Juggle Circle, explained</h4><p>Rules, rounds, and how to measure it</p></div>
+    <div class="card gold"><span class="tag">06</span><h4>Juggle Circle, played</h4><p>We run it, record it and analyse it together</p></div>
+  </div>
+</section>
+
+<!-- ========================================================= 01 RECAP -->
+<section class="divider" data-chrome="off">
+  <div class="sec-num">01</div>
+  <h2>Last week,<br>revisited</h2>
+  <p class="lead">Who plays, and why. We need it again today.</p>
+</section>
+
+<section data-section="01 · Last week">
+  <span class="kicker">The Player Type Game</span>
+  <h2>You gave us three answers each</h2>
+  <div class="said-did">
+    <div class="card blue fragment rise"><span class="tag">Said</span><span class="big">Self-report</span><p>The box you ticked before play: Finish, Find, Friends or Fight.</p></div>
+    <div class="card gold fragment rise"><span class="tag">Did</span><span class="big">Behaviour</span><p>Your biggest column: Tasks, Finds, Trades or Duels.</p></div>
+    <div class="card mint fragment rise"><span class="tag">Wanted</span><span class="big">Enjoyment</span><p>The rule you liked most, whatever it scored.</p></div>
+  </div>
+  <p class="lead mt-l fragment rise">For most of you they <span class="hl-coral">didn't agree</span>. What you do depends on the rules you're given, the people in the room and the prize, as well as on who you are.</p>
+</section>
+
+<section data-section="01 · Last week">
+  <div class="split-wide">
+    <div>
+      <span class="kicker">Bartle (1996)</span>
+      <h2>Four types, two axes</h2>
+      <p class="ink2">Each Week 1 rule was built for one corner.</p>
+      <p class="ink2">The types need each other: Killers need people to fight, Socialisers need people to talk to.</p>
+      <p class="mt-m"><span class="chip">useful vocabulary</span><span class="chip coral">poor measuring instrument</span></p>
+    </div>
+    <svg class="fig" viewBox="0 0 820 640" role="img" aria-label="Bartle's player types on two axes: acting versus interacting, players versus world">
+      <rect class="bartle-q" x="70" y="30" width="360" height="270" rx="16"/>
+      <rect class="bartle-q" x="440" y="30" width="360" height="270" rx="16"/>
+      <rect class="bartle-q" x="70" y="310" width="360" height="270" rx="16"/>
+      <rect class="bartle-q" x="440" y="310" width="360" height="270" rx="16"/>
+      <text x="100" y="110" fill="#ff6b6b" font-size="44" font-weight="700" style="font-family:var(--display)">Killers</text>
+      <text x="100" y="152" fill="#c3cbe6" font-size="23">act on players</text>
+      <text x="100" y="262" fill="#8d98bf" font-size="20" style="font-family:var(--mono)">WEEK 1 · DUELS</text>
+      <text x="470" y="110" fill="#ffc53d" font-size="44" font-weight="700" style="font-family:var(--display)">Achievers</text>
+      <text x="470" y="152" fill="#c3cbe6" font-size="23">act on the world</text>
+      <text x="470" y="262" fill="#8d98bf" font-size="20" style="font-family:var(--mono)">WEEK 1 · TASKS</text>
+      <text x="100" y="390" fill="#4fd1a5" font-size="44" font-weight="700" style="font-family:var(--display)">Socialisers</text>
+      <text x="100" y="432" fill="#c3cbe6" font-size="23">interact with players</text>
+      <text x="100" y="542" fill="#8d98bf" font-size="20" style="font-family:var(--mono)">WEEK 1 · TRADES</text>
+      <text x="470" y="390" fill="#3aa8ff" font-size="44" font-weight="700" style="font-family:var(--display)">Explorers</text>
+      <text x="470" y="432" fill="#c3cbe6" font-size="23">interact with the world</text>
+      <text x="470" y="542" fill="#8d98bf" font-size="20" style="font-family:var(--mono)">WEEK 1 · FINDS</text>
+      <text class="ax-label" x="30" y="165" transform="rotate(-90 30 165)" text-anchor="middle">Acting</text>
+      <text class="ax-label" x="30" y="445" transform="rotate(-90 30 445)" text-anchor="middle">Interacting</text>
+      <text class="ax-label" x="250" y="620" text-anchor="middle">Players</text>
+      <text class="ax-label" x="620" y="620" text-anchor="middle">World</text>
+    </svg>
+  </div>
+</section>
+
+<section data-section="01 · Last week">
+  <span class="kicker">From boxes to dimensions</span>
+  <h2>The Hexad: six motivations</h2>
+  <table class="t">
+    <thead><tr><th>Hexad type</th><th>Driven by</th><th>SDT need / motivation</th><th>Bartle nearest</th></tr></thead>
+    <tbody>
+      <tr class="fragment rise"><td>Achiever</td><td>Mastery, getting better</td><td><span class="chip blue">competence</span></td><td>Achiever</td></tr>
+      <tr class="fragment rise"><td>Player</td><td>Rewards, points, prizes</td><td><span class="chip gold">extrinsic</span></td><td>Achiever</td></tr>
+      <tr class="fragment rise"><td>Free Spirit</td><td>Freedom to explore and create</td><td><span class="chip blue">autonomy</span></td><td>Explorer</td></tr>
+      <tr class="fragment rise"><td>Socialiser</td><td>Connection with others</td><td><span class="chip blue">relatedness</span></td><td>Socialiser</td></tr>
+      <tr class="fragment rise"><td>Disruptor</td><td>Change, testing the limits</td><td><span class="chip coral">autonomy, often against others</span></td><td>Killer</td></tr>
+      <tr class="fragment rise"><td>Philanthropist</td><td>Purpose, helping others</td><td><span class="chip mint">purpose</span></td><td>Socialiser</td></tr>
+    </tbody>
+  </table>
+  <p class="small mt-s">Marczewski (2015); Tondello et al. (2016). Scored on six scales, so everyone has a profile, not a single box.</p>
+</section>
+
+<section data-section="01 · Last week">
+  <span class="kicker">Self-Determination Theory · Deci &amp; Ryan</span>
+  <h2>Why a rule feels good</h2>
+  <div class="grid-3">
+    <div class="card blue"><span class="tag">Autonomy</span><span class="big">Choice</span><p>Finds: go where you like, in any order.</p></div>
+    <div class="card gold"><span class="tag">Competence</span><span class="big">Mastery</span><p>Tasks and Duels: prove you can do it.</p></div>
+    <div class="card mint"><span class="tag">Relatedness</span><span class="big">Connection</span><p>Trades: every point needs another person.</p></div>
+  </div>
+  <div class="card mt-m fragment rise" style="display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center">
+    <span class="big hl-gold" style="margin:0">Hold on to this</span>
+    <p class="ink2" style="font-size:26px">Did the prizes change what you did? Rewards can <strong>crowd out</strong> intrinsic motivation (the overjustification effect). Today's practical ends with a <strong>free-choice minute</strong>: who keeps playing when nobody asks them to?</p>
+  </div>
+</section>
+
+<section data-section="01 · Last week">
+  <span class="kicker">Theories of engagement</span>
+  <h2>Three lenses, one player</h2>
+  <div class="grid-3">
+    <div class="card"><span class="tag">Last week</span><h3>Player types</h3><p><strong>Who</strong> is playing and what they're after.</p></div>
+    <div class="card"><span class="tag">Last week</span><h3>SDT</h3><p><strong>Why</strong> it's motivating: autonomy, competence, relatedness.</p></div>
+    <div class="card blue"><span class="tag">This week</span><h3>Flow</h3><p><strong>What it feels like</strong> when it's working, moment to moment.</p></div>
+  </div>
+  <p class="lead mt-l">Today's question: <span class="hl">does who you are change what breaks your flow?</span></p>
+</section>
+
+<!-- ========================================================= 02 MDA -->
+<section class="divider" data-chrome="off">
+  <div class="sec-num">02</div>
+  <h2>From mechanics<br>to experience</h2>
+  <p class="lead">Designers build rules. Players feel something.</p>
+</section>
+
+<section data-section="02 · Mechanics → experience">
+  <span class="kicker">Hunicke, LeBlanc &amp; Zubek (2004)</span>
+  <h2>MDA</h2>
+  <div class="mda">
+    <div class="card"><span class="letter">M</span><h3>Mechanics</h3><p>Rules, systems and constraints, written in code.</p></div>
+    <div class="arrow">→</div>
+    <div class="card"><span class="letter">D</span><h3>Dynamics</h3><p>What emerges when players act on those rules, live, at run time.</p></div>
+    <div class="arrow">→</div>
+    <div class="card"><span class="letter">A</span><h3>Aesthetics</h3><p>The emotional response: tension, delight, fear, flow.</p></div>
+  </div>
+  <div class="dir">
+    <span class="who hl fragment rise" data-fragment-index="1">Designer</span><div class="bar designer fragment rise" data-fragment-index="1">starts here: builds M, hopes for A →</div>
+    <span class="who hl-coral fragment rise" data-fragment-index="2">Player</span><div class="bar player fragment rise" data-fragment-index="2">← meets A first, may never see M</div>
+  </div>
+</section>
+
+<section data-section="02 · Mechanics → experience">
+  <div class="split" style="grid-template-columns:1fr 1fr">
+    <div>
+      <span class="kicker">Jesse Schell (2008) · the elemental tetrad</span>
+      <h2>MDA + S: add Story</h2>
+      <p class="ink2">MDA has no place for story. Schell's tetrad puts <strong class="hl-violet">Story</strong> and <strong>Technology</strong> alongside Mechanics and Aesthetics, as four elements that support each other.</p>
+      <div class="card violet mt-m fragment rise"><span class="tag">Watch the word "aesthetics"</span><p>For Schell it means <strong>how the game looks, sounds and feels</strong> (the sensory surface). For MDA it means <strong>the player's emotional response</strong>.</p></div>
+      <p class="small mt-m fragment rise">Juggle Circle has almost no story, which is why the practical includes One-Word Story to test imaginative immersion.</p>
+    </div>
+    <svg class="fig" viewBox="0 0 640 600" role="img" aria-label="Schell's elemental tetrad: aesthetics at the top, mechanics and story in the middle, technology at the bottom, with a visibility gradient from more visible to less visible">
+      <g stroke="#2a3768" stroke-width="2">
+        <line x1="320" y1="95" x2="140" y2="300"/><line x1="320" y1="95" x2="500" y2="300"/><line x1="140" y1="300" x2="500" y2="300"/>
+        <line x1="140" y1="300" x2="320" y2="505"/><line x1="500" y1="300" x2="320" y2="505"/><line x1="320" y1="95" x2="320" y2="505"/>
+      </g>
+      <g text-anchor="middle" style="font-family:var(--display)" font-weight="700" font-size="30">
+        <rect x="215" y="55" width="210" height="80" rx="16" fill="#151f45" stroke="#ff6b6b" stroke-width="2"/><text x="320" y="106" fill="#ff6b6b">Aesthetics</text>
+        <rect x="35" y="260" width="210" height="80" rx="16" fill="#151f45" stroke="#3aa8ff" stroke-width="2"/><text x="140" y="311" fill="#3aa8ff">Mechanics</text>
+        <rect x="395" y="260" width="210" height="80" rx="16" fill="rgba(165,139,255,.18)" stroke="#a58bff" stroke-width="3"/><text x="500" y="311" fill="#a58bff">Story</text>
+        <rect x="215" y="465" width="210" height="80" rx="16" fill="#151f45" stroke="#8d98bf" stroke-width="2"/><text x="320" y="516" fill="#c3cbe6">Technology</text>
+      </g>
+      <g style="font-family:var(--mono)" font-size="16" fill="#8d98bf" letter-spacing="2">
+        <text x="620" y="70" text-anchor="end">MORE VISIBLE</text>
+        <text x="620" y="560" text-anchor="end">LESS VISIBLE</text>
+        <line x1="600" y1="85" x2="600" y2="535" stroke="#56608a" stroke-width="2" stroke-dasharray="4 6"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<section data-section="02 · Mechanics → experience">
+  <div class="split">
+    <div>
+      <span class="kicker">A mechanic is a rule in code</span>
+      <h2>One button, three layers</h2>
+<pre class="code"><span class="c">// Mechanic: detect the shoot action</span>
+<span class="k">IF</span> <span class="v">buttonPress</span> == <span class="s">"shoot"</span> <span class="k">AND</span> <span class="v">ammoCount</span> &gt; <span class="n">0</span>
+    <span class="k">THEN</span>
+        <span class="v">isShooting</span> = <span class="n">TRUE</span>
+        <span class="v">ammoCount</span> = <span class="v">ammoCount</span> - <span class="n">1</span>
+<span class="k">ENDIF</span></pre>
+    </div>
+    <div class="stack">
+      <div class="card blue fragment rise"><span class="tag">Mechanic</span><p><strong>Limited ammo</strong>, and a counter that goes down.</p></div>
+      <div class="card fragment rise"><span class="tag">Dynamic</span><p>Players <strong>hold fire</strong>, count shots and scavenge between fights.</p></div>
+      <div class="card coral fragment rise"><span class="tag">Aesthetic</span><p><strong>Tension</strong>: every miss costs something.</p></div>
+    </div>
+  </div>
+</section>
+
+<section data-section="02 · Mechanics → experience">
+  <span class="kicker">MDA in practice</span>
+  <h2>Same framework, three feelings</h2>
+  <div class="game-head"><span></span><span>Mechanic</span><span>Dynamic</span><span>Aesthetic</span></div>
+  <div class="game-row fragment rise">
+    <div class="cover"><img src="img/dark-souls.jpg" alt="Dark Souls cover"></div>
+    <div class="cell"><b>Stamina, hitboxes</b>Every swing and roll costs stamina.</div>
+    <div class="cell"><b>Cautious combat</b>Read, wait, punish.</div>
+    <div class="cell"><b>Fear, then triumph</b>Tension and relief.</div>
+  </div>
+  <div class="game-row fragment rise">
+    <div class="cover" style="background:#e9eefc"><img src="img/mario-kart.png" alt="Mario Kart" style="object-fit:contain"></div>
+    <div class="cell"><b>Items, rubber-banding</b>Better items the further back you are.</div>
+    <div class="cell"><b>Chaotic racing</b>Leads never feel safe.</div>
+    <div class="cell"><b>Fun, frustration, laughter</b>Everyone stays in it.</div>
+  </div>
+  <div class="game-row fragment rise">
+    <div class="cover"><img src="img/last-of-us.jpg" alt="The Last of Us cover"></div>
+    <div class="cell"><b>Stealth, scarce ammo</b>Crafting from scraps.</div>
+    <div class="cell"><b>Tense survival play</b>Avoid fights you can't afford.</div>
+    <div class="cell"><b>Emotional connection</b>Protecting someone.</div>
+  </div>
+</section>
+
+<section data-section="02 · Mechanics → experience">
+  <span class="kicker">Families of mechanics</span>
+  <h2>Most games blend these</h2>
+  <div class="grid-5">
+    <div class="card"><span class="tag">01</span><h4>Physics</h4><p>Simulated laws, from realistic to fantastical.</p><p class="small">FIFA, Skyrim</p></div>
+    <div class="card"><span class="tag">02</span><h4>Economy</h4><p>Resources, trade and use; meaningful choices.</p><p class="small">Civilization, Minecraft</p></div>
+    <div class="card"><span class="tag">03</span><h4>Progression</h4><p>Milestones that unlock content and abilities.</p><p class="small">Pokémon, WoW</p></div>
+    <div class="card"><span class="tag">04</span><h4>Tactical</h4><p>Planning, trade-offs, careful decisions.</p><p class="small">XCOM, Fire Emblem</p></div>
+    <div class="card"><span class="tag">05</span><h4>Social</h4><p>Co-op, competition, communication.</p><p class="small">Fortnite, Among Us</p></div>
+  </div>
+  <div class="grid-2 mt-l">
+    <div class="card blue fragment rise"><span class="tag">Core mechanic</span><p>The thing you do over and over, like <strong>jumping in Mario</strong>. It keeps players coming back.</p></div>
+    <div class="card fragment rise"><span class="tag">Secondary mechanics</span><p>Dialogue, trading, crafting. They add depth but <strong>can't rescue a weak core</strong>.</p></div>
+  </div>
+</section>
+
+<section data-section="02 · Mechanics → experience">
+  <span class="kicker">Designing mechanics</span>
+  <h2>Intuitive <span class="muted">and</span> engaging</h2>
+  <div class="grid-2">
+    <div class="card blue">
+      <span class="tag">Intuitive: easy to get into</span>
+      <ul>
+        <li><strong>Easy to understand</strong>: grasp it without a manual</li>
+        <li><strong>Consistent</strong>: it works the same way every time</li>
+        <li><strong>Feedback</strong>: every action answers back, instantly</li>
+        <li><strong>Well paced</strong>: taught through play, a bit at a time</li>
+      </ul>
+    </div>
+    <div class="card gold">
+      <span class="tag">Engaging: worth staying for</span>
+      <ul>
+        <li><strong>Challenging</strong>: there's always a next level of skill</li>
+        <li><strong>Depth</strong>: still interesting after hours</li>
+        <li><strong>Variety</strong>: new twists keep it fresh</li>
+        <li><strong>Rewarding</strong>: effort is recognised</li>
+      </ul>
+    </div>
+  </div>
+  <p class="lead mt-m fragment rise">Every practical game today takes <strong>under two minutes to learn</strong> and has <strong>no obvious ceiling</strong>.</p>
+</section>
+
+<!-- ========================================================= 03 FLOW -->
+<section class="divider" data-chrome="off">
+  <div class="sec-num">03</div>
+  <h2>Flow &amp;<br>immersion</h2>
+  <p class="lead">The feeling we're designing for, and how to tell when it's there.</p>
+</section>
+
+<section class="center-v" data-section="03 · Flow">
+  <span class="kicker">Mihaly Csikszentmihalyi (1990)</span>
+  <p class="quote">“The state in which people are so involved in an activity that <span class="hl">nothing else seems to matter</span>.”<span class="src">Csikszentmihalyi, M. (1990) Flow: The Psychology of Optimal Experience, p. 4</span></p>
+</section>
+
+<section data-section="03 · Flow">
+  <div class="split" style="grid-template-columns:.9fr 1.1fr">
+    <div>
+      <span class="kicker gold">Running example · you'll play it later</span>
+      <h2>Juggle Circle</h2>
+      <ol class="ink2" style="font-size:28px">
+        <li>Everyone <strong>stands</strong> in a circle.</li>
+        <li><strong>Say the receiver's name, then throw.</strong></li>
+        <li>Once you've thrown, <strong>sit down</strong>, so everyone can see who is still to receive.</li>
+        <li>The last player throws back to the first. That order is now fixed and repeats.</li>
+      </ol>
+      <div class="card gold mt-m fragment rise"><span class="tag">Then the ramp</span><p>More objects in the air. One <strong class="hl">odd one out</strong> goes round the order backwards. Drop it or throw badly and you <strong class="hl-coral">sit down</strong>.</p></div>
+    </div>
+    <svg class="fig" viewBox="0 0 700 620" role="img" aria-label="Animation: players in a circle say a name, throw the ball in a fixed order and sit down after throwing, until everyone has received">
+<circle cx="350" cy="300" r="220" fill="none" stroke="#2a3768" stroke-width="2" stroke-dasharray="4 8"/>
+<polyline points="350.0,80.0 505.6,455.6 194.4,144.4 570.0,300.0 194.4,455.6 505.6,144.4 350.0,520.0 130.0,300.0 350.0,80.0" fill="none" stroke="#3aa8ff" stroke-opacity=".18" stroke-width="2"/>
+<g>
+<circle cx="350.0" cy="80.0" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.0169" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.0169" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.0169" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="350.0" y="88.0" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P3<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.0169" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="505.6" cy="144.4" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.5042" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.5042" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.5042" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="505.6" y="152.4" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P2<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.5042" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="570.0" cy="300.0" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.3093" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.3093" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.3093" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="570.0" y="308.0" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P1<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.3093" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="505.6" cy="455.6" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.1144" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.1144" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.1144" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="505.6" y="463.6" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P8<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.1144" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="350.0" cy="520.0" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.6017" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.6017" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.6017" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="350.0" y="528.0" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P7<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.6017" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="194.4" cy="455.6" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.4068" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.4068" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.4068" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="194.4" y="463.6" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P6<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.4068" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="130.0" cy="300.0" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.6992" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.6992" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.6992" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="130.0" y="308.0" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P5<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.6992" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="194.4" cy="144.4" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.2119" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.2119" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.2119" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="194.4" y="152.4" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P4<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.2119" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<text x="350.0" y="38.0" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P8!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.0000;0.0636" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="549.4" y="498.9" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P4!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.0975;0.1610" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="150.6" y="117.1" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P1!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.1949;0.2585" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="632.0" y="308.0" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P6!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.2924;0.3559" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="150.6" y="498.9" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P2!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.3898;0.4534" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="549.4" y="117.1" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P7!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.4873;0.5508" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="350.0" y="578.0" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P5!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.5847;0.6483" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="68.0" y="308.0" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P3!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.6822;0.7458" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<circle r="11" fill="#ffc53d" stroke="#0b1026" stroke-width="3"><animate attributeName="cx" values="350.0;427.8;505.6;350.0;194.4;382.2;570.0;382.2;194.4;350.0;505.6;427.8;350.0;240.0;130.0;240.0;350.0;350.0" keyTimes="0.0000;0.0487;0.0975;0.1462;0.1949;0.2436;0.2924;0.3411;0.3898;0.4386;0.4873;0.5360;0.5847;0.6335;0.6822;0.7309;0.7797;1.0000" dur="11.799999999999999s" repeatCount="indefinite"/><animate attributeName="cy" values="80.0;267.8;455.6;300.0;144.4;222.2;300.0;377.8;455.6;300.0;144.4;332.2;520.0;410.0;300.0;190.0;80.0;80.0" keyTimes="0.0000;0.0487;0.0975;0.1462;0.1949;0.2436;0.2924;0.3411;0.3898;0.4386;0.4873;0.5360;0.5847;0.6335;0.6822;0.7309;0.7797;1.0000" dur="11.799999999999999s" repeatCount="indefinite"/><animate attributeName="r" values="11;18;11;18;11;18;11;18;11;18;11;18;11;18;11;18;11;11" keyTimes="0.0000;0.0487;0.0975;0.1462;0.1949;0.2436;0.2924;0.3411;0.3898;0.4386;0.4873;0.5360;0.5847;0.6335;0.6822;0.7309;0.7797;1.0000" dur="11.799999999999999s" repeatCount="indefinite"/></circle>
+<g font-size="19" fill="#c3cbe6"><circle cx="190" cy="590" r="12" fill="#1b2753" stroke="#eef2ff" stroke-width="2.5"/><text x="210" y="597">standing: still to receive</text><circle cx="450" cy="590" r="9" fill="#0f1530" stroke="#56608a" stroke-width="2.5"/><text x="468" y="597">sat: has thrown</text></g>
+</svg>
+
+  </div>
+</section>
+
+<section data-section="03 · Flow">
+  <div class="split-wide" style="grid-template-columns:.72fr 1.28fr">
+    <div>
+      <span class="kicker">The flow channel</span>
+      <h2>Challenge and skill rise together</h2>
+      <p class="ink2 fragment rise" data-fragment-index="1"><strong class="hl">A</strong> Learn the rule with one object.</p>
+      <p class="ink2 fragment rise" data-fragment-index="2"><strong class="hl">B</strong> The ramp adds an object each time you get comfortable.</p>
+      <p class="ink2 fragment rise" data-fragment-index="3">Keep this up and you reach mastery at 3–4 objects.</p>
+      <p class="ink2 fragment rise" data-fragment-index="4"><strong class="hl-coral">C</strong> A distractor doesn't change the task. It takes attention away, so your <em>effective</em> skill drops.</p>
+    </div>
+    <svg class="fig" viewBox="0 0 900 640" role="img" aria-label="Flow channel: a diagonal band between anxiety (above) and boredom (below), with one player's path through rounds A, B and C">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3aa8ff"/></marker>
+        <marker id="ahc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff6b6b"/></marker>
+        <linearGradient id="chan" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#3aa8ff" stop-opacity=".10"/><stop offset="1" stop-color="#3aa8ff" stop-opacity=".30"/></linearGradient>
+      </defs>
+      <polygon points="80,560 80,470 730,30 860,30 860,110 190,560" fill="url(#chan)"/>
+      <line x1="80" y1="470" x2="730" y2="30" stroke="#3aa8ff" stroke-width="2"/>
+      <line x1="190" y1="560" x2="860" y2="110" stroke="#3aa8ff" stroke-width="2"/>
+      <path class="ax" d="M80,20 L80,560 L880,560"/>
+      <text class="ax-label" x="880" y="600" text-anchor="end">Skill →</text>
+      <text class="ax-label" x="40" y="300" text-anchor="middle" transform="rotate(-90 40 300)">Challenge →</text>
+      <text x="120" y="80" fill="#ff6b6b" font-size="34" font-weight="700" style="font-family:var(--display)">Anxiety</text>
+      <text x="120" y="112" fill="#8d98bf" font-size="20">challenge outruns skill</text>
+      <text x="850" y="470" fill="#4fd1a5" font-size="34" font-weight="700" text-anchor="end" style="font-family:var(--display)">Boredom</text>
+      <text x="850" y="502" fill="#8d98bf" font-size="20" text-anchor="end">skill outruns challenge</text>
+      <text x="520" y="248" fill="#bfe3ff" font-size="26" font-weight="600" transform="rotate(-34 520 248)" text-anchor="middle" style="font-family:var(--display);letter-spacing:.08em">FLOW CHANNEL</text>
+      <g class="fragment" data-fragment-index="1">
+        <circle cx="140" cy="520" r="10" fill="#3aa8ff"/>
+        <text x="108" y="494" fill="#eef2ff" font-size="21">A: learn with 1 object</text>
+        <line x1="152" y1="520" x2="288" y2="520" stroke="#3aa8ff" stroke-width="3" marker-end="url(#ah)"/>
+        <circle cx="300" cy="520" r="8" fill="#3aa8ff"/>
+        <text x="315" y="545" fill="#8d98bf" font-size="19">skill grows, still easy</text>
+      </g>
+      <g class="fragment" data-fragment-index="2">
+        <line x1="300" y1="510" x2="300" y2="432" stroke="#3aa8ff" stroke-width="3" marker-end="url(#ah)"/>
+        <circle cx="300" cy="420" r="10" fill="#3aa8ff"/>
+        <text x="318" y="440" fill="#eef2ff" font-size="21">B: the ramp adds an object</text>
+      </g>
+      <g class="fragment" data-fragment-index="3">
+        <path d="M305,412 C380,360 470,300 548,258" stroke="#3aa8ff" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <circle cx="560" cy="250" r="10" fill="#3aa8ff"/>
+        <text x="580" y="256" fill="#eef2ff" font-size="21">mastery at 3–4 objects</text>
+      </g>
+      <g class="fragment" data-fragment-index="4">
+        <line x1="548" y1="250" x2="252" y2="250" stroke="#ff6b6b" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#ahc)"/>
+        <circle cx="240" cy="250" r="11" fill="#ff6b6b"/>
+        <text x="228" y="200" fill="#ff6b6b" font-size="21" font-weight="600" text-anchor="middle">C: a distractor cuts</text>
+        <text x="228" y="226" fill="#ff6b6b" font-size="21" font-weight="600" text-anchor="middle">effective skill → anxiety</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<section data-section="03 · Flow">
+  <span class="kicker">Csikszentmihalyi's conditions, as you'll see them in the room</span>
+  <h2>How do you know it's flow?</h2>
+  <div class="cond">
+    <div class="card fragment rise"><h4>Clear goals</h4><p>One-sentence rule per game.</p><span class="watch">watch: players stop asking questions</span></div>
+    <div class="card fragment rise"><h4>Immediate feedback</h4><p>The object is caught or dropped.</p><span class="watch">watch: self-correction</span></div>
+    <div class="card fragment rise"><h4>Challenge–skill balance</h4><p>Each round adds one new element.</p><span class="watch">watch: streaks lengthen, then plateau</span></div>
+    <div class="card fragment rise"><h4>Deep concentration</h4><p>More objects, faster tempo.</p><span class="watch">watch: talk stops, gaze locks</span></div>
+    <div class="card fragment rise"><h4>Sense of control</h4><p>Instant, self-paced restarts.</p><span class="watch">watch: resets without looking at you</span></div>
+    <div class="card fragment rise"><h4>Loss of self-consciousness</h4><p>Until the hecklers arrive.</p><span class="watch">watch: who plays on, who freezes</span></div>
+    <div class="card fragment rise"><h4>Time distortion</h4><p>Estimate the round's length.</p><span class="watch">watch: estimates short of the clock</span></div>
+    <div class="card fragment rise"><h4>Autotelic experience</h4><p>Rewarding in itself.</p><span class="watch">watch: who keeps playing unasked</span></div>
+  </div>
+</section>
+
+<section data-section="03 · Flow">
+  <div class="split">
+    <div>
+      <span class="kicker">The two you can design first</span>
+      <h2>Clear goals &amp; immediate feedback</h2>
+      <p class="ink2">Players can't be in flow if they don't know <strong>what to do</strong> or <strong>whether it worked</strong>.</p>
+      <ul class="ink2 mt-m">
+        <li class="fragment rise"><strong>Goals</strong>: the next objective is always visible (a marker, a door, a score to beat).</li>
+        <li class="fragment rise"><strong>Feedback</strong>: sound, hit-flash, rumble and a number, all within a fraction of a second.</li>
+        <li class="fragment rise"><strong>Celeste</strong> respawns you in under a second: failure stays inside the flow.</li>
+      </ul>
+    </div>
+    <div class="img-card" style="height:640px"><img src="img/climber.jpg" alt="A climber on a rock face at sunset" style="object-position:30% 50%"></div>
+  </div>
+</section>
+
+<section data-section="03 · Immersion">
+  <span class="kicker">Brown &amp; Cairns (2004)</span>
+  <h2>Immersion deepens as barriers fall</h2>
+  <div class="stages">
+    <div class="card fragment rise" data-fragment-index="1"><span class="tag">Stage 1</span><span class="big">Engagement</span><p>You want to keep playing.</p><p class="barrier">Barrier: access. Preference, learning the controls.</p></div>
+    <div class="gate fragment rise" data-fragment-index="2"><div class="bar"></div></div>
+    <div class="card fragment rise" data-fragment-index="2"><span class="tag">Stage 2</span><span class="big">Engrossment</span><p>You're emotionally invested; you notice less around you.</p><p class="barrier">Barrier: game construction. Visuals, interesting tasks, plot.</p></div>
+    <div class="gate fragment rise" data-fragment-index="3"><div class="bar"></div></div>
+    <div class="card blue fragment rise" data-fragment-index="3"><span class="tag">Stage 3</span><span class="big">Total immersion</span><p>You're "in the game". Presence.</p><p class="barrier">Barrier: empathy and atmosphere.</p></div>
+  </div>
+  <p class="lead mt-l fragment rise">Immersion is fragile: <strong>one badly placed interruption</strong> drops you back a stage.</p>
+</section>
+
+<section data-section="03 · Immersion">
+  <span class="kicker">Ermi &amp; Mäyrä (2005) · the SCI model</span>
+  <h2>Three sources of immersion</h2>
+  <div class="grid-3">
+    <div class="card mint fragment rise">
+      <span class="tag">S · Sensory</span><span class="big">Sight, sound, touch</span>
+      <p>The audiovisual world overpowers the real one.</p>
+      <p class="small">Hellblade's binaural voices · Journey</p>
+      <p class="mt-s"><span class="chip mint">Blind Navigator</span><span class="chip mint">Rhythm Chain</span></p>
+    </div>
+    <div class="card blue fragment rise">
+      <span class="tag">C · Challenge-based</span><span class="big">Skill against task</span>
+      <p>Motor and mental challenge; closest to flow.</p>
+      <p class="small">Tetris · Celeste · Beat Saber</p>
+      <p class="mt-s"><span class="chip blue">Juggle Circle</span><span class="chip blue">Speed Stack</span><span class="chip blue">Tangram</span></p>
+    </div>
+    <div class="card violet fragment rise">
+      <span class="tag">I · Imaginative</span><span class="big">Story, characters, world</span>
+      <p>You care about people and places that don't exist.</p>
+      <p class="small">The Last of Us · Disco Elysium</p>
+      <p class="mt-s"><span class="chip violet">One-Word Story</span></p>
+    </div>
+  </div>
+  <p class="lead mt-m fragment rise">Different sources, <span class="hl-coral">different weak points</span>. That's the next section.</p>
+</section>
+
+<section data-section="03 · Flow vs immersion">
+  <span class="kicker">Often used as synonyms. They aren't.</span>
+  <h2>Flow vs immersion</h2>
+  <table class="t" style="font-size:24px">
+    <thead><tr><th style="width:18%"></th><th style="width:41%"><span class="hl">Flow</span></th><th><span class="hl-violet">Immersion</span></th></tr></thead>
+    <tbody>
+      <tr><td>What it is</td><td>Total absorption in an activity</td><td>Being drawn into the game and its world</td></tr>
+      <tr><td>Comes from</td><td>Challenge matched to skill</td><td>Sensory, challenge-based or imaginative sources</td></tr>
+      <tr><td>Needs</td><td>Clear goals, immediate feedback, control</td><td>Barriers removed: access, construction, atmosphere</td></tr>
+      <tr><td>At its peak</td><td><strong>Agency</strong>: effortless control, time flies</td><td><strong>Presence</strong>: "I was there"</td></tr>
+      <tr><td>Without the other</td><td>Tetris, chess, juggling: no world needed</td><td>A walking sim: a world, little challenge</td></tr>
+      <tr><td>Measured with</td><td>Flow Short Scale; our F1 and F2</td><td>IEQ, GEQ; our F3</td></tr>
+    </tbody>
+  </table>
+  <p class="lead mt-m fragment rise" style="font-size:30px">They share the middle: <strong>deep concentration, fading awareness of the room, time distortion</strong>. That shared ground is what distractors attack.</p>
+</section>
+
+<section data-section="03 · Flow vs immersion">
+  <div class="split" style="grid-template-columns:1.05fr .95fr">
+    <svg class="fig" viewBox="0 10 760 550" role="img" aria-label="Venn diagram: flow and immersion overlap in concentration, lost awareness and time distortion; agency sits on the flow side and presence on the immersion side">
+      <circle cx="270" cy="280" r="215" fill="rgba(58,168,255,.12)" stroke="#3aa8ff" stroke-width="2.5"/>
+      <circle cx="490" cy="280" r="215" fill="rgba(165,139,255,.12)" stroke="#a58bff" stroke-width="2.5"/>
+      <text x="150" y="50" fill="#3aa8ff" font-size="36" font-weight="700" text-anchor="middle" style="font-family:var(--display)">Flow</text>
+      <text x="610" y="50" fill="#a58bff" font-size="36" font-weight="700" text-anchor="middle" style="font-family:var(--display)">Immersion</text>
+      <g class="fragment" data-fragment-index="1">
+        <rect x="80" y="235" width="170" height="86" rx="14" fill="#0b1026" stroke="#ffc53d" stroke-width="2.5"/>
+        <text x="165" y="273" fill="#ffc53d" font-size="30" font-weight="700" text-anchor="middle" style="font-family:var(--display)">Agency</text>
+        <text x="165" y="303" fill="#c3cbe6" font-size="18" text-anchor="middle">my actions matter</text>
+      </g>
+      <g class="fragment" data-fragment-index="2">
+        <rect x="510" y="235" width="170" height="86" rx="14" fill="#0b1026" stroke="#4fd1a5" stroke-width="2.5"/>
+        <text x="595" y="273" fill="#4fd1a5" font-size="30" font-weight="700" text-anchor="middle" style="font-family:var(--display)">Presence</text>
+        <text x="595" y="303" fill="#c3cbe6" font-size="18" text-anchor="middle">I am there</text>
+      </g>
+      <g font-size="20" fill="#eef2ff" text-anchor="middle">
+        <text x="380" y="240">concentration</text>
+        <text x="380" y="285">lost awareness</text>
+        <text x="380" y="330">time distortion</text>
+      </g>
+    </svg>
+    <div>
+      <span class="kicker">Two more words you'll meet in papers</span>
+      <h2 style="font-size:56px">Agency &amp; presence</h2>
+      <div class="card gold fragment rise" data-fragment-index="1"><span class="tag">Agency · Murray (1997)</span><p>“The satisfying power to take meaningful action and see the results of our decisions and choices.” It builds on flow's <strong>sense of control</strong> and Week 1's <strong>autonomy</strong>.</p></div>
+      <div class="card mint mt-s fragment rise" data-fragment-index="2"><span class="tag">Presence · Lombard &amp; Ditton (1997)</span><p>The feeling of <strong>being there</strong>, forgetting the screen or headset in between. It's where total immersion ends up, and it's strongest in VR.</p></div>
+      <p class="small mt-s fragment rise" data-fragment-index="3">The <strong>assistance</strong> distractor attacks agency. <strong>Out-of-world</strong> interruptions attack presence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= 04 BREAKING -->
+<section class="divider" data-chrome="off">
+  <div class="sec-num">04</div>
+  <h2>Breaking &amp;<br>protecting flow</h2>
+  <p class="lead">Players will tolerate challenge, but not unfairness or tedium.</p>
+</section>
+
+<section data-section="04 · Breaking flow">
+  <div class="split-wide" style="grid-template-columns:1.25fr .75fr">
+    <div>
+      <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#000">
+        <iframe data-src="https://www.youtube-nocookie.com/embed/rFMCX0NF4wQ?rel=0&amp;modestbranding=1" title="Rayman Legends: Castle Rock" style="position:absolute;inset:0;width:100%;height:100%;border:0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+      </div>
+      <p class="small mt-s">If the video won't load: <a href="https://www.youtube.com/watch?v=rFMCX0NF4wQ" target="_blank">youtube.com/watch?v=rFMCX0NF4wQ</a></p>
+    </div>
+    <div>
+      <span class="kicker">Watch</span>
+      <h2 style="font-size:54px">Rayman Legends: Castle Rock</h2>
+      <p class="ink2">A level synced to music. As you watch, note:</p>
+      <ul class="ink2">
+        <li>How does it tell you <strong>what to do</strong>?</li>
+        <li>How does it tell you <strong>it worked</strong>?</li>
+        <li>What would <strong>break</strong> it?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section data-section="04 · Breaking flow">
+  <span class="prompt-badge"><span class="dot"></span>Pair · 60 seconds</span>
+  <h2>When did a game break your flow?</h2>
+  <p class="lead">Name the moment, then find its category.</p>
+  <div class="mt-m" style="max-width:1400px">
+    <span class="chip coral fragment rise">difficulty spike</span><span class="chip coral fragment rise">too easy, too long</span><span class="chip fragment rise">unclear goal</span><span class="chip fragment rise">no feedback</span><span class="chip coral fragment rise">input lag</span><span class="chip fragment rise">unskippable cutscene</span><span class="chip fragment rise">long loading</span><span class="chip coral fragment rise">lose 30 minutes' progress</span><span class="chip fragment rise">repetitive grind</span><span class="chip fragment rise">tutorial overload</span><span class="chip coral fragment rise">inconsistent rules</span><span class="chip fragment rise">notification pop-up</span><span class="chip fragment rise">cluttered HUD</span><span class="chip fragment rise">jarring audio</span>
+  </div>
+  <div class="mt-m"><span class="timer" data-seconds="60">1:00</span></div>
+</section>
+
+<section data-section="04 · Breaking flow">
+  <span class="kicker">Distractor taxonomy</span>
+  <h2 style="margin-bottom:24px">Where it comes from × what it competes for</h2>
+  <div class="quad">
+    <div class="ylab">competes for meaning ↑</div>
+    <div class="card fragment rise" data-fragment-index="3"><h3>Interruption</h3><p>"What's 17 × 3?" mid-throw</p><p>"What room are we in?"</p><p>Stop-and-rate prompt</p></div>
+    <div class="card coral fragment rise" data-fragment-index="4"><h3>Sabotage</h3><p>Shouting the wrong name</p><p>Fake navigation instructions</p><p>Over-eager hints</p><p class="small" style="color:var(--coral)">hypothesis: hardest to filter out</p></div>
+    <div class="ylab">competes for perception ↑</div>
+    <div class="card fragment rise" data-fragment-index="1"><h3>Noise</h3><p>Knocking on the table</p><p>Phone buzz, lights flicked</p><p>Crowding round the player</p></div>
+    <div class="card fragment rise" data-fragment-index="2"><h3>Clutter</h3><p>A rogue extra object</p><p>A clapper on a different tempo</p><p>Other pairs calling in the maze</p></div>
+    <div></div>
+    <div class="xlab">outside the play (non-diegetic)</div>
+    <div class="xlab">inside the play (diegetic) →</div>
+  </div>
+</section>
+
+<section data-section="04 · Breaking flow">
+  <span class="kicker">Five kinds of distractor</span>
+  <h2>From the classroom to the screen</h2>
+  <table class="t">
+    <thead><tr><th>Type</th><th>What it attacks</th><th>In the practical</th><th>In a game</th></tr></thead>
+    <tbody>
+      <tr class="fragment rise"><td><span class="hl-mint">Sensory</span></td><td>Perception, attention capture</td><td>Knocking, flicking lights, crowding</td><td>Screen shake, audio sting, particle clutter</td></tr>
+      <tr class="fragment rise"><td><span class="hl-coral">Semantic</span></td><td>Working memory, same-channel meaning</td><td>Wrong names, mental arithmetic</td><td>A dual task, contradictory UI text</td></tr>
+      <tr class="fragment rise"><td><span class="hl-gold">Social</span></td><td>Self-consciousness</td><td>An audience, a "judge" with a clipboard</td><td>Spectators, live chat, a ghost score</td></tr>
+      <tr class="fragment rise"><td><span class="hl">Interruption</span></td><td>Continuity, time distortion</td><td>A forced stop to answer a question</td><td>Pop-ups, pause-to-rate prompts, loading</td></tr>
+      <tr class="fragment rise"><td><span class="hl-violet">Assistance</span></td><td>Autonomy, sense of control</td><td>A backseat driver giving hints</td><td>Intrusive tutorials, hint arrows, auto-aim</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section data-section="04 · Breaking flow">
+  <span class="kicker">Two surprises</span>
+  <h2>The audience and the helper</h2>
+  <div class="grid-2">
+    <div class="card gold">
+      <span class="tag">Choking under pressure · Beilock &amp; Carr (2001)</span>
+      <span class="big">Experts choke</span>
+      <p>Being watched makes skilled players attend to movements they normally run on autopilot. Novices, who are thinking step by step anyway, often don't suffer.</p>
+      <p class="small mt-s">Social pressure sits across the whole grid: it adds self-consciousness to any distractor.</p>
+    </div>
+    <div class="card violet">
+      <span class="tag">Help as a distractor · SDT</span>
+      <span class="big">Unwanted hints</span>
+      <p>A hint you didn't ask for takes the solution away from you. Competence and autonomy both drop, even when the hint is right.</p>
+      <p class="small mt-s">In Tangram Race, about one hint in three is deliberately wrong. Do you still follow them?</p>
+    </div>
+  </div>
+  <p class="lead mt-l fragment rise">Think of a game that uses this <strong>on purpose</strong>. <span class="muted">Ghost timers? Kill-cams? Companions?</span></p>
+</section>
+
+<section data-section="04 · Protecting flow">
+  <span class="kicker">Keeping players in the channel · 1</span>
+  <h2>Gradual difficulty increase</h2>
+  <div class="levers">
+    <div class="card fragment rise"><span class="tag">01</span><h4>Start simple</h4><p>Introduce the core controls with room to practise.</p></div>
+    <div class="card fragment rise"><span class="tag">02</span><h4>Add one thing</h4><p>Each step builds on the skill you just learned.</p></div>
+    <div class="card fragment rise"><span class="tag">03</span><h4>Level design</h4><p>New enemies and obstacles at a manageable pace.</p></div>
+    <div class="card fragment rise"><span class="tag">04</span><h4>Rewards &amp; feedback</h4><p>Celebrate progress and show where to improve.</p></div>
+    <div class="card fragment rise"><span class="tag">05</span><h4>Smooth curve</h4><p>Rest beats between peaks; no sudden spikes.</p></div>
+  </div>
+  <div class="card blue mt-l fragment rise" style="display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:center">
+    <span class="big" style="margin:0">Today's rounds</span>
+    <p style="font-size:26px"><strong>Round B</strong> adds exactly one new element every 45–60 seconds: an object, a tempo step, a new rule. That is a textbook difficulty ramp.</p>
+  </div>
+</section>
+
+<section data-section="04 · Protecting flow">
+  <span class="kicker">Keeping players in the channel · 2</span>
+  <h2>Skill matching</h2>
+  <div class="grid-3" style="gap:22px">
+    <div class="card blue fragment rise"><h4>Dynamic difficulty (DDA)</h4><p>The game adjusts itself in real time from your performance.</p><p class="small">Resident Evil 4 · Left 4 Dead's AI Director</p></div>
+    <div class="card fragment rise"><h4>Difficulty levels</h4><p>Player-chosen, and switchable without penalty.</p><p class="small">Easy · Normal · Hard</p></div>
+    <div class="card fragment rise"><h4>Assist options</h4><p>Tune individual dials: speed, invincibility, aim.</p><p class="small">Celeste Assist Mode · Hades God Mode</p></div>
+    <div class="card fragment rise"><h4>Player profiling</h4><p>Early levels measure your skill quietly.</p><p class="small">tutorial as a test</p></div>
+    <div class="card fragment rise"><h4>Adaptive AI &amp; catch-up</h4><p>Opponents ease off or push back to keep it close.</p><p class="small">Mario Kart item odds</p></div>
+    <div class="card fragment rise"><h4>Player choice</h4><p>Optional paths and side content at different difficulties.</p><p class="small">branching routes</p></div>
+  </div>
+</section>
+
+<!-- ========================================================= 05 JUGGLE CIRCLE -->
+<section class="divider" data-chrome="off">
+  <div class="sec-num">05</div>
+  <h2>Worked example:<br>Juggle Circle</h2>
+  <p class="lead">Design it, run it, measure it, predict it.</p>
+</section>
+
+<section data-section="05 · Juggle Circle">
+  <div class="split" style="grid-template-columns:1.1fr .9fr">
+    <svg class="fig" viewBox="0 0 700 640" role="img" aria-label="Juggle Circle floor plan: eight players in a circle with throw arrows, two hecklers and a rogue thrower outside the circle">
+      <defs>
+        <marker id="jb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3aa8ff"/></marker>
+        <marker id="jo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ffc53d"/></marker>
+      </defs>
+      <circle cx="350" cy="300" r="220" fill="none" stroke="#2a3768" stroke-width="2" stroke-dasharray="4 8"/>
+      <!-- players: P1 east, clockwise order from top: P3 top, P2 NE, P1 E, P8 SE, P7 S, P6 SW, P5 W, P4 NW -->
+      <g font-size="22" font-weight="600" text-anchor="middle" style="font-family:var(--mono)">
+        <circle cx="350" cy="80" r="30" fill="#151f45" stroke="#c3cbe6" stroke-width="2"/><text x="350" y="88" fill="#eef2ff">P3</text>
+        <circle cx="506" cy="144" r="30" fill="#151f45" stroke="#c3cbe6" stroke-width="2"/><text x="506" y="152" fill="#eef2ff">P2</text>
+        <circle cx="570" cy="300" r="30" fill="#151f45" stroke="#c3cbe6" stroke-width="2"/><text x="570" y="308" fill="#eef2ff">P1</text>
+        <circle cx="506" cy="456" r="30" fill="#151f45" stroke="#c3cbe6" stroke-width="2"/><text x="506" y="464" fill="#eef2ff">P8</text>
+        <circle cx="350" cy="520" r="30" fill="#151f45" stroke="#c3cbe6" stroke-width="2"/><text x="350" y="528" fill="#eef2ff">P7</text>
+        <circle cx="194" cy="456" r="30" fill="#151f45" stroke="#c3cbe6" stroke-width="2"/><text x="194" y="464" fill="#eef2ff">P6</text>
+        <circle cx="130" cy="300" r="30" fill="#151f45" stroke="#c3cbe6" stroke-width="2"/><text x="130" y="308" fill="#eef2ff">P5</text>
+        <circle cx="194" cy="144" r="30" fill="#151f45" stroke="#c3cbe6" stroke-width="2"/><text x="194" y="152" fill="#eef2ff">P4</text>
+      </g>
+      <g class="fragment" data-fragment-index="1">
+        <path d="M362,108 C420,250 470,360 492,428" stroke="#3aa8ff" stroke-width="3.5" fill="none" marker-end="url(#jb)"/>
+        <path d="M478,450 C380,400 290,300 214,168" stroke="#3aa8ff" stroke-width="3.5" fill="none" marker-end="url(#jb)"/>
+      </g>
+      <g class="fragment" data-fragment-index="2">
+        <path d="M542,300 C430,330 300,400 220,445" stroke="#ffc53d" stroke-width="3.5" stroke-dasharray="12 9" fill="none" marker-end="url(#jo)"/>
+      </g>
+      <g class="fragment" data-fragment-index="3" text-anchor="middle" font-size="22" font-weight="700" style="font-family:var(--mono)">
+        <circle cx="60" cy="110" r="28" fill="rgba(255,107,107,.18)" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="5 4"/><text x="60" y="118" fill="#ff6b6b">H</text>
+        <circle cx="640" cy="110" r="28" fill="rgba(255,107,107,.18)" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="5 4"/><text x="640" y="118" fill="#ff6b6b">H</text>
+        <circle cx="350" cy="600" r="28" fill="rgba(255,107,107,.18)" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="5 4"/><text x="350" y="608" fill="#ff6b6b">R</text>
+      </g>
+      <g text-anchor="middle" font-size="20" font-weight="700" style="font-family:var(--mono)">
+        <rect x="592" y="468" width="96" height="56" rx="12" fill="rgba(255,197,61,.16)" stroke="#ffc53d" stroke-width="2"/><text x="640" y="503" fill="#ffc53d">GM</text>
+        <rect x="12" y="468" width="96" height="56" rx="12" fill="rgba(79,209,165,.14)" stroke="#4fd1a5" stroke-width="2"/><text x="60" y="503" fill="#4fd1a5">REC</text>
+      </g>
+    </svg>
+    <div>
+      <span class="kicker gold">Activity 1 · about 15 min</span>
+      <h2 style="font-size:54px">The rules</h2>
+      <ul class="ink2" style="font-size:25px">
+        <li><strong>Build the order:</strong> everyone stands. Say the receiver's name, then throw, then sit. The last player throws back to the first.</li>
+        <li><strong>Everyone stands again.</strong> That order is now fixed for every round.</li>
+        <li class="fragment rise" data-fragment-index="1"><span class="hl">The ramp:</span> the <span class="hl-gold">gamesmaster (GM)</span> feeds in a new object every 45 s, up to four.</li>
+        <li class="fragment rise" data-fragment-index="2"><span class="hl">Object 3</span> is the odd one out (a soft toy, say): it runs the order <strong>in reverse</strong>.</li>
+        <li class="fragment rise" data-fragment-index="3"><span class="hl-coral">Round C:</span> hecklers (H) shout wrong names; a rogue thrower (R) lobs in a spare object. They stay 1 m outside.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section data-section="05 · Juggle Circle">
+  <span class="kicker gold">Who does what, and how you lose</span>
+  <h2>Roles, faults and pauses</h2>
+  <div class="grid-2" style="grid-template-columns:1.05fr .95fr;gap:28px">
+    <div class="card coral">
+      <span class="tag">You sit down, out for the rest of the round, if…</span>
+      <ul style="margin-bottom:14px">
+        <li>You <strong>don't catch</strong> an object thrown to you</li>
+        <li>You make a <strong>bad throw</strong> (the GM decides)</li>
+      </ul>
+      <p style="font-size:23px">Throwers skip seated players: throw to the person <em>they</em> would have thrown to. The GM puts the object back in play.</p>
+      <p style="font-size:23px" class="mt-s">The round ends when <strong>one player is left standing</strong>, or when <strong>time is up</strong>.</p>
+    </div>
+    <div class="stack">
+      <div class="card gold" style="padding:18px 24px"><h4>Gamesmaster (GM) · 1</h4><p style="font-size:22px">Watches the on-screen clock, feeds in objects on cue, judges catches and bad throws, ends the round.</p></div>
+      <div class="card mint" style="padding:18px 24px"><h4>Recorder (REC) · 1</h4><p style="font-size:22px">Notes the time each player sits down, and when the round ends.</p></div>
+      <div class="card" style="padding:18px 24px"><h4>Distractors · 3, Round C only</h4><p style="font-size:22px">Two hecklers and a rogue thrower, working from the script card.</p></div>
+    </div>
+  </div>
+  <p class="lead mt-m fragment rise" style="font-size:28px"><strong>Between rounds:</strong> a 60-second pause to fill in page 2 of the sheet. <strong>Everyone stands again</strong>, including anyone who was out.</p>
+</section>
+
+<section data-section="05 · Juggle Circle">
+  <span class="kicker gold">One protocol for every activity · about 15 minutes</span>
+  <h2>Practice, three rounds, a free minute</h2>
+  <svg class="fig" viewBox="0 0 1408 380" role="img" aria-label="Session timeline: 1 minute practice, Round A 2 minutes, card break, Round B 3 minutes with an object added every 45 seconds, card break, Round C 3 minutes with the same ramp plus scripted distractors, card break, 1 minute free choice">
+    <rect x="0" y="40" width="105" height="96" rx="12" fill="rgba(141,152,191,.10)" stroke="#56608a" stroke-width="1.5"/><text x="14" y="82" fill="#eef2ff" font-size="20" font-weight="700" style="font-family:var(--display)">Practice</text><text x="14" y="114" fill="#c3cbe6" font-size="19">1 min</text><rect x="111" y="40" width="210" height="96" rx="12" fill="rgba(58,168,255,.14)" stroke="#3aa8ff" stroke-width="1.5"/><text x="125" y="82" fill="#eef2ff" font-size="28" font-weight="700" style="font-family:var(--display)">A · learn</text><text x="125" y="114" fill="#c3cbe6" font-size="19">2 min · 1 object</text><rect x="327" y="40" width="105" height="96" rx="12" fill="rgba(141,152,191,.08)" stroke="#2a3768" stroke-width="1.5"/><text x="341" y="82" fill="#eef2ff" font-size="24" font-weight="700" style="font-family:var(--display)">Card</text><text x="341" y="114" fill="#c3cbe6" font-size="19">60 s</text><rect x="438" y="40" width="315" height="96" rx="12" fill="rgba(58,168,255,.28)" stroke="#3aa8ff" stroke-width="1.5"/><text x="452" y="82" fill="#eef2ff" font-size="28" font-weight="700" style="font-family:var(--display)">B · ramp</text><text x="452" y="114" fill="#c3cbe6" font-size="19">3 min · +1 object / 45 s</text><rect x="759" y="40" width="105" height="96" rx="12" fill="rgba(141,152,191,.08)" stroke="#2a3768" stroke-width="1.5"/><text x="773" y="82" fill="#eef2ff" font-size="24" font-weight="700" style="font-family:var(--display)">Card</text><text x="773" y="114" fill="#c3cbe6" font-size="19">60 s</text><rect x="870" y="40" width="315" height="96" rx="12" fill="rgba(255,107,107,.2)" stroke="#ff6b6b" stroke-width="1.5"/><text x="884" y="82" fill="#eef2ff" font-size="26" font-weight="700" style="font-family:var(--display)">C · ramp + distract</text><text x="884" y="114" fill="#c3cbe6" font-size="19">3 min · same ramp + script</text><rect x="1191" y="40" width="105" height="96" rx="12" fill="rgba(141,152,191,.08)" stroke="#2a3768" stroke-width="1.5"/><text x="1205" y="82" fill="#eef2ff" font-size="24" font-weight="700" style="font-family:var(--display)">Card</text><text x="1205" y="114" fill="#c3cbe6" font-size="19">60 s</text><rect x="1302" y="40" width="105" height="96" rx="12" fill="rgba(255,197,61,.14)" stroke="#ffc53d" stroke-width="1.5"/><text x="1316" y="82" fill="#eef2ff" font-size="24" font-weight="700" style="font-family:var(--display)">Free</text><text x="1316" y="114" fill="#c3cbe6" font-size="19">1 min</text>
+    <g font-size="19" fill="#8d98bf"><text x="4" y="172">not scored</text><text x="330" y="172">stand up</text><text x="330" y="196">again</text><text x="762" y="172">stand up</text><text x="762" y="196">again</text><text x="1194" y="172">stand up</text><text x="1194" y="196">again</text></g>
+    <line x1="516.8" y1="146" x2="516.8" y2="162" stroke="#3aa8ff" stroke-width="3"/><line x1="595.5" y1="146" x2="595.5" y2="162" stroke="#3aa8ff" stroke-width="3"/><line x1="674.2" y1="146" x2="674.2" y2="162" stroke="#3aa8ff" stroke-width="3"/><line x1="948.8" y1="146" x2="948.8" y2="162" stroke="#3aa8ff" stroke-width="3"/><line x1="1027.5" y1="146" x2="1027.5" y2="162" stroke="#3aa8ff" stroke-width="3"/><line x1="1106.2" y1="146" x2="1106.2" y2="162" stroke="#3aa8ff" stroke-width="3"/><line x1="905.0" y1="166" x2="905.0" y2="180" stroke="#ff6b6b" stroke-width="3"/><line x1="948.8" y1="166" x2="948.8" y2="180" stroke="#ff6b6b" stroke-width="3"/><line x1="1027.5" y1="166" x2="1027.5" y2="180" stroke="#ff6b6b" stroke-width="3"/><line x1="1106.2" y1="166" x2="1106.2" y2="180" stroke="#ff6b6b" stroke-width="3"/><line x1="1158.8" y1="166" x2="1158.8" y2="180" stroke="#4fd1a5" stroke-width="3"/>
+    <g font-size="20" fill="#c3cbe6">
+      <text x="440" y="222"><tspan fill="#3aa8ff" style="font-family:var(--mono)">0:45 </tspan> object 2</text>
+      <text x="440" y="252"><tspan fill="#3aa8ff" style="font-family:var(--mono)">1:30 </tspan> object 3: reverse order</text>
+      <text x="440" y="282"><tspan fill="#3aa8ff" style="font-family:var(--mono)">2:15 </tspan> object 4</text>
+    </g>
+    <g class="fragment" font-size="20" fill="#c3cbe6">
+      <text x="872" y="222" fill="#8d98bf">same objects, plus:</text>
+      <text x="872" y="252"><tspan fill="#ff6b6b" style="font-family:var(--mono)">0:20 </tspan> heckler A: wrong names</text>
+      <text x="872" y="280"><tspan fill="#ff6b6b" style="font-family:var(--mono)">0:45 </tspan> heckler B joins in</text>
+      <text x="872" y="308"><tspan fill="#ff6b6b" style="font-family:var(--mono)">1:30 </tspan> rogue object lobbed in</text>
+      <text x="872" y="336"><tspan fill="#ff6b6b" style="font-family:var(--mono)">2:15 </tspan> GM: “What’s 17 × 3?”</text>
+      <text x="872" y="364"><tspan fill="#4fd1a5" style="font-family:var(--mono)">2:45 </tspan> all stop: who recovers?</text>
+    </g>
+  </svg>
+  <div class="grid-3 mt-s fragment rise">
+    <div class="card"><h4>Practice first</h4><p>Nobody sits down. Lock in the order and learn what counts as a bad throw.</p></div>
+    <div class="card"><h4>Distractors follow a script</h4><p>So Round C is the same for every group.</p></div>
+    <div class="card coral"><h4>Ground rules</h4><p>No contact. Heckle the play, never the person. Anyone can call "pause".</p></div>
+  </div>
+</section>
+
+<section data-section="05 · Juggle Circle">
+  <span class="kicker gold">Read it with MDA</span>
+  <h2>A juggling game is a game</h2>
+  <div class="mda">
+    <div class="card blue"><span class="letter" style="font-size:90px">M</span><p><strong>Object count</strong>, a fixed order, a reverse object, sitting out.</p></div>
+    <div class="arrow">→</div>
+    <div class="card"><span class="letter" style="font-size:90px">D</span><p><strong>Tracking</strong> several objects at once; the group finds a shared rhythm.</p></div>
+    <div class="arrow">→</div>
+    <div class="card coral"><span class="letter" style="font-size:90px">A</span><p><strong>Team flow</strong>, rising tension, then laughter at the drop.</p></div>
+  </div>
+  <div class="grid-2 mt-m">
+    <div class="card fragment rise"><span class="tag">Design link</span><p>Tracking multiple objects is the core skill of action games. Adding an object is the simplest possible difficulty dial.</p></div>
+    <div class="card gold fragment rise"><span class="tag">Control group</span><p>Hecklers shout <strong>nonsense sounds</strong> instead of names. Now you can separate sensory from semantic distraction.</p></div>
+  </div>
+</section>
+
+<section data-section="05 · Measuring flow">
+  <div class="split" style="grid-template-columns:1.1fr .9fr;align-items:start">
+    <div>
+      <span class="kicker gold">Page 2 of the activity sheet · 60 seconds per round</span>
+      <h2>Measuring a feeling</h2>
+      <table class="t measure" style="font-size:23px">
+        <thead><tr><th>#</th><th>Item</th><th>Answer</th></tr></thead>
+        <tbody>
+          <tr><td>F1</td><td>The challenge matched my skill.</td><td>1–7</td></tr>
+          <tr><td>F2</td><td>I lost track of time.</td><td>1–7</td></tr>
+          <tr><td>F3</td><td>I was aware of what was going on around me. <span class="muted">(reversed)</span></td><td>1–7</td></tr>
+          <tr><td>T</td><td>Without checking, how long did that round last?</td><td>m:ss</td></tr>
+          <tr><td>P</td><td>How long I stayed in (the recorder tells you)</td><td>m:ss</td></tr>
+          <tr><td>N</td><td>One word for how that felt</td><td>free text</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="padding-top:60px">
+      <div class="formula fragment rise"><span class="lab">Flow index (1–7)</span>(F1 + F2 + (8 − F3)) ÷ 3</div>
+      <div class="formula fragment rise"><span class="lab">Time distortion · below 1 = time flew</span>estimated ÷ actual</div>
+      <div class="formula fragment rise"><span class="lab">Distraction cost</span>(B − C) ÷ B</div>
+      <p class="small fragment rise">A teaching shortcut, not a validated instrument. For real studies: Flow Short Scale, IEQ, GEQ.</p>
+    </div>
+  </div>
+</section>
+
+<section data-section="05 · Measuring flow">
+  <span class="kicker gold">One player, three rounds · P01, Juggle Circle</span>
+  <h2>Let's score a card together</h2>
+  <div class="grid-2" style="grid-template-columns:1fr 1fr;gap:48px">
+    <div>
+      <h4 class="ink2" style="color:var(--ink-2)">Flow index <span class="muted" style="font-weight:400">(1–7)</span></h4>
+      <svg class="fig chart" viewBox="0 0 640 380" role="img" aria-label="Flow index by round for player P01: A 4.0, B 5.7, C 2.3">
+        <g>
+          <line class="grid" x1="60" y1="320" x2="620" y2="320"/><text class="tick" x="48" y="326" text-anchor="end">1</text>
+          <line class="grid" x1="60" y1="220" x2="620" y2="220"/><text class="tick" x="48" y="226" text-anchor="end">3</text>
+          <line class="grid" x1="60" y1="120" x2="620" y2="120"/><text class="tick" x="48" y="126" text-anchor="end">5</text>
+          <line class="grid" x1="60" y1="20" x2="620" y2="20"/><text class="tick" x="48" y="26" text-anchor="end">7</text>
+        </g>
+        <!-- scale: y = 320 - (v-1)*50 -->
+        <rect class="bar" x="100" y="170" width="110" height="150" rx="4" fill="#3aa8ff" opacity=".55"><title>Round A: flow index 4.0</title></rect>
+        <rect class="bar" x="280" y="85" width="110" height="235" rx="4" fill="#3aa8ff"><title>Round B: flow index 5.7</title></rect>
+        <rect class="bar fragment" data-fragment-index="1" x="460" y="253" width="110" height="67" rx="4" fill="#ff6b6b"><title>Round C: flow index 2.3</title></rect>
+        <text class="val" x="155" y="158" text-anchor="middle">4.0</text>
+        <text class="val" x="335" y="73" text-anchor="middle">5.7</text>
+        <text class="val fragment" data-fragment-index="1" x="515" y="241" text-anchor="middle">2.3</text>
+        <text class="cat" x="155" y="356" text-anchor="middle">A · learn</text>
+        <text class="cat" x="335" y="356" text-anchor="middle">B · ramp</text>
+        <text class="cat" x="515" y="356" text-anchor="middle">C · distracted</text>
+      </svg>
+    </div>
+    <div>
+      <h4 class="ink2" style="color:var(--ink-2)">Time distortion <span class="muted" style="font-weight:400">(estimate ÷ actual)</span></h4>
+      <svg class="fig chart" viewBox="0 0 640 380" role="img" aria-label="Time distortion by round for player P01: A 0.79, B 0.78, C 1.17; values below 1 mean time flew">
+        <!-- scale 0..1.4 over 320..20: y = 320 - v*214 -->
+        <g>
+          <line class="grid" x1="60" y1="320" x2="620" y2="320"/><text class="tick" x="48" y="326" text-anchor="end">0</text>
+          <line class="grid" x1="60" y1="213" x2="620" y2="213"/><text class="tick" x="48" y="219" text-anchor="end">0.5</text>
+          <line x1="60" y1="106" x2="620" y2="106" stroke="#ffc53d" stroke-width="2" stroke-dasharray="8 6"/><text class="tick" x="48" y="112" text-anchor="end">1.0</text>
+          <text x="104" y="96" fill="#ffc53d" font-size="17" style="font-family:var(--mono)">real clock</text>
+        </g>
+        <rect class="bar" x="100" y="151" width="110" height="169" rx="4" fill="#3aa8ff" opacity=".55"><title>Round A: 95 s estimated, 120 s actual (0.79)</title></rect>
+        <rect class="bar" x="280" y="153" width="110" height="167" rx="4" fill="#3aa8ff"><title>Round B: 140 s estimated, 180 s actual (0.78)</title></rect>
+        <rect class="bar fragment" data-fragment-index="2" x="460" y="70" width="110" height="250" rx="4" fill="#ff6b6b"><title>Round C: 210 s estimated, 180 s actual (1.17)</title></rect>
+        <text class="val" x="155" y="139" text-anchor="middle">0.79</text>
+        <text class="val" x="335" y="141" text-anchor="middle">0.78</text>
+        <text class="val fragment" data-fragment-index="2" x="515" y="58" text-anchor="middle">1.17</text>
+        <text class="cat" x="155" y="356" text-anchor="middle">A · learn</text>
+        <text class="cat" x="335" y="356" text-anchor="middle">B · ramp</text>
+        <text class="cat" x="515" y="356" text-anchor="middle">C · distracted</text>
+      </svg>
+    </div>
+  </div>
+  <p class="lead mt-s fragment rise" data-fragment-index="3" style="font-size:30px">Distraction cost: flow <strong class="hl-coral">−59%</strong> ((5.7 − 2.3) ÷ 5.7) · time in <strong class="hl-coral">−47%</strong> (180 s → 95 s) · and Round C <strong>felt longer</strong> than it was.</p>
+</section>
+
+<section data-section="05 · Measuring flow">
+  <span class="kicker gold">Was it the distractors, or just tiredness?</span>
+  <h2>Swap the order for half the groups</h2>
+  <div class="order">
+    <span class="lab">Odd groups</span>
+    <div class="blk"><b>A</b>learn</div><div class="blk"><b>B</b>ramp</div><div class="blk c"><b>C</b>ramp + distractors</div><div class="blk"><b>Free</b>1 min</div>
+  </div>
+  <div class="order">
+    <span class="lab">Even groups</span>
+    <div class="blk"><b>A</b>learn</div><div class="blk c"><b>C</b>ramp + distractors</div><div class="blk"><b>B</b>ramp</div><div class="blk"><b>Free</b>1 min</div>
+  </div>
+  <div class="grid-2 mt-m">
+    <div class="card mint fragment rise"><span class="tag">If C scores fall in both orders</span><p>The distractors did it.</p></div>
+    <div class="card coral fragment rise"><span class="tag">If C falls only when it comes last</span><p>Fatigue or boredom is a rival explanation.</p></div>
+  </div>
+  <p class="small mt-m fragment rise">This is <strong>counterbalancing</strong>: a within-subjects design with a baseline (B), a manipulation (C) and a self-report measure (the card).</p>
+</section>
+<section data-section="05 · Measuring flow">
+  <span class="kicker gold">From cards to a finding</span>
+  <h2>Record → process → analyse</h2>
+  <div class="grid-3" style="gap:24px">
+    <div class="card blue fragment rise">
+      <span class="tag">1 · Record · during play</span>
+      <ul style="font-size:22px">
+        <li><strong>Every player</strong>: one card per round, 60 s.</li>
+        <li><strong>Recorder</strong>: when each player sat down, and when the round ended.</li>
+        <li><strong>GM</strong>: group number and order (ABC or ACB).</li>
+      </ul>
+    </div>
+    <div class="card gold fragment rise">
+      <span class="tag">2 · Process · 5 min after</span>
+      <ul style="font-size:22px">
+        <li>Type <strong>one row per player per round</strong> into the class spreadsheet.</li>
+        <li>The sheet works out <strong>flow index</strong> and <strong>time distortion</strong> for each row.</li>
+        <li>It averages each round, then the <strong>distraction cost</strong>: (B − C) ÷ B.</li>
+      </ul>
+    </div>
+    <div class="card coral fragment rise">
+      <span class="tag">3 · Analyse · debrief</span>
+      <ul style="font-size:22px">
+        <li>Did flow <strong>drop from B to C</strong>?</li>
+        <li>Was it the distractors? Compare <strong>odd vs even</strong> groups.</li>
+        <li>Did time <strong>fly in B and drag in C</strong>?</li>
+        <li>Was your <strong>player-type prediction</strong> right?</li>
+      </ul>
+    </div>
+  </div>
+<pre class="code mt-m fragment rise" style="font-size:20px"><span class="c">Group, Order, Player, Player type, Round, F1, F2, F3, T estimate (s), Time in (s), One word</span>
+<span class="n">1</span>, <span class="s">ABC</span>, P01, Achiever, <span class="v">A</span>, 5, 3, 4,  95,    , calm
+<span class="n">1</span>, <span class="s">ABC</span>, P01, Achiever, <span class="v">B</span>, 6, 5, 2, 140,    , buzzing
+<span class="n">1</span>, <span class="s">ABC</span>, P01, Achiever, <span class="v">C</span>, 3, 2, 6, 210, 95, frazzled</pre>
+</section>
+
+<section data-section="05 · Predict">
+  <span class="kicker gold">Back to player types</span>
+  <h2>Write your prediction <em>before</em> you play</h2>
+  <table class="t">
+    <thead><tr><th>Hexad type</th><th>A hypothesis to test today</th></tr></thead>
+    <tbody>
+      <tr><td>Achiever</td><td>Tolerates heckling best when a score is visible; biggest flow drop in the no-score story game.</td></tr>
+      <tr><td>Player</td><td>Highest flow in Speed Stack; plays on in the free minute only if there's a leaderboard.</td></tr>
+      <tr><td>Free Spirit</td><td>Highest flow in One-Word Story and Round A; most hurt by the backseat driver.</td></tr>
+      <tr><td>Socialiser</td><td>Enjoys Round C more, despite performing worse.</td></tr>
+      <tr><td>Disruptor</td><td>Volunteers to distract; performs better under provocation than in silence.</td></tr>
+      <tr><td>Philanthropist</td><td>Best guide in Blind Navigator; hurt most by failing the team.</td></tr>
+    </tbody>
+  </table>
+  <p class="small mt-s">Predictions to test, not established findings. Log your type in the <code>player_type</code> column.</p>
+</section>
+
+
+<section data-section="Summary">
+  <span class="kicker">Take away</span>
+  <h2>Five things to remember</h2>
+  <div class="stack" style="max-width:1300px">
+    <div class="card fragment rise"><p style="font-size:28px"><strong class="hl">Mechanics make dynamics make aesthetics.</strong> Design backwards from the feeling you want.</p></div>
+    <div class="card fragment rise"><p style="font-size:28px"><strong class="hl">Flow is challenge matched to skill</strong>, with clear goals and immediate feedback.</p></div>
+    <div class="card fragment rise"><p style="font-size:28px"><strong class="hl">Immersion comes from three sources</strong> (sensory, challenge, imaginative), each with its own weak points.</p></div>
+    <div class="card fragment rise"><p style="font-size:28px"><strong class="hl-coral">A distractor lowers effective skill.</strong> The most meaningful ones, inside the play, hurt most.</p></div>
+    <div class="card fragment rise"><p style="font-size:28px"><strong class="hl-gold">You can measure it</strong>: baseline, manipulation, self-report, and a swapped order.</p></div>
+  </div>
+</section>
+
+<section class="divider" data-chrome="off">
+  <div class="sec-num">06</div>
+  <h2>Juggle Circle:<br>play it</h2>
+  <p class="lead">Keep this on screen while we play. The clock runs the rounds.</p>
+</section>
+
+<section data-section="06 · Play it">
+  <span class="kicker gold">Step 1 · 3 minutes</span>
+  <h2>Get into groups</h2>
+  <div class="grid-2" style="gap:28px">
+    <div class="card">
+      <span class="tag">Each group · 11–13 people</span>
+      <ul>
+        <li><strong>6–8 players</strong>, about 2 m apart</li>
+        <li><strong>1 gamesmaster (GM)</strong>: objects, bad throws, the clock</li>
+        <li><strong>1 recorder (REC)</strong>: who sat down, and when</li>
+        <li><strong>3 distractors</strong>: 2 hecklers and 1 rogue thrower</li>
+      </ul>
+    </div>
+    <div class="stack">
+      <div class="card gold"><span class="tag">Kit per group</span><p>5 soft objects to throw (beanbags, soft balls, rolled socks); one should look different. One activity sheet and a pen each.</p></div>
+      <div class="card coral"><span class="tag">Group number decides the order</span><p><strong>Odd</strong> groups play B then C. <strong>Even</strong> groups play C then B.</p></div>
+    </div>
+  </div>
+  <p class="lead mt-m">Distractors: <strong>come to the front for your script card.</strong> Don't tell your group what's on it.</p>
+</section>
+
+<section data-section="06 · Play it">
+  <div class="split" style="grid-template-columns:.9fr 1.1fr">
+    <div>
+      <span class="kicker gold">Step 2 · 2 minutes</span>
+      <h2>Build your order</h2>
+      <ol class="ink2" style="font-size:27px">
+        <li><strong>Everyone stands.</strong> The GM gives one object to a starting player.</li>
+        <li>Say the name of someone <strong>still standing</strong>, throw to them, then <strong>sit down</strong>.</li>
+        <li>When everyone is sitting, the last player throws <strong>back to the starter</strong>.</li>
+        <li><strong>Stand up</strong> and run it once more. Remember who <em>you</em> throw to.</li>
+      </ol>
+      <div class="mt-s"><span class="timer" data-seconds="120">2:00</span></div>
+    </div>
+    <svg class="fig" viewBox="0 0 700 620" role="img" aria-label="Animation: players in a circle say a name, throw the ball in a fixed order and sit down after throwing, until everyone has received">
+<circle cx="350" cy="300" r="220" fill="none" stroke="#2a3768" stroke-width="2" stroke-dasharray="4 8"/>
+<polyline points="350.0,80.0 505.6,455.6 194.4,144.4 570.0,300.0 194.4,455.6 505.6,144.4 350.0,520.0 130.0,300.0 350.0,80.0" fill="none" stroke="#3aa8ff" stroke-opacity=".18" stroke-width="2"/>
+<g>
+<circle cx="350.0" cy="80.0" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.0169" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.0169" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.0169" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="350.0" y="88.0" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P3<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.0169" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="505.6" cy="144.4" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.5042" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.5042" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.5042" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="505.6" y="152.4" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P2<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.5042" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="570.0" cy="300.0" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.3093" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.3093" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.3093" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="570.0" y="308.0" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P1<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.3093" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="505.6" cy="455.6" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.1144" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.1144" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.1144" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="505.6" y="463.6" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P8<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.1144" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="350.0" cy="520.0" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.6017" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.6017" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.6017" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="350.0" y="528.0" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P7<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.6017" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="194.4" cy="455.6" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.4068" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.4068" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.4068" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="194.4" y="463.6" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P6<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.4068" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="130.0" cy="300.0" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.6992" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.6992" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.6992" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="130.0" y="308.0" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P5<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.6992" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<g>
+<circle cx="194.4" cy="144.4" r="31" fill="#151f45" stroke="#eef2ff" stroke-width="2.5"><animate attributeName="r" values="31;23" keyTimes="0;0.2119" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="stroke" values="#eef2ff;#56608a" keyTimes="0;0.2119" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/><animate attributeName="fill" values="#1b2753;#0f1530" keyTimes="0;0.2119" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></circle>
+<text x="194.4" y="152.4" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2ff" style="font-family:var(--mono)">P4<animate attributeName="fill" values="#eef2ff;#56608a" keyTimes="0;0.2119" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+</g>
+<text x="350.0" y="38.0" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P8!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.0000;0.0636" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="549.4" y="498.9" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P4!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.0975;0.1610" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="150.6" y="117.1" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P1!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.1949;0.2585" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="632.0" y="308.0" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P6!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.2924;0.3559" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="150.6" y="498.9" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P2!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.3898;0.4534" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="549.4" y="117.1" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P7!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.4873;0.5508" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="350.0" y="578.0" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P5!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.5847;0.6483" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<text x="68.0" y="308.0" text-anchor="middle" font-size="22" font-weight="700" fill="#ffc53d" opacity="0">“P3!”<animate attributeName="opacity" values="0;1;0" keyTimes="0;0.6822;0.7458" dur="11.799999999999999s" calcMode="discrete" repeatCount="indefinite"/></text>
+<circle r="11" fill="#ffc53d" stroke="#0b1026" stroke-width="3"><animate attributeName="cx" values="350.0;427.8;505.6;350.0;194.4;382.2;570.0;382.2;194.4;350.0;505.6;427.8;350.0;240.0;130.0;240.0;350.0;350.0" keyTimes="0.0000;0.0487;0.0975;0.1462;0.1949;0.2436;0.2924;0.3411;0.3898;0.4386;0.4873;0.5360;0.5847;0.6335;0.6822;0.7309;0.7797;1.0000" dur="11.799999999999999s" repeatCount="indefinite"/><animate attributeName="cy" values="80.0;267.8;455.6;300.0;144.4;222.2;300.0;377.8;455.6;300.0;144.4;332.2;520.0;410.0;300.0;190.0;80.0;80.0" keyTimes="0.0000;0.0487;0.0975;0.1462;0.1949;0.2436;0.2924;0.3411;0.3898;0.4386;0.4873;0.5360;0.5847;0.6335;0.6822;0.7309;0.7797;1.0000" dur="11.799999999999999s" repeatCount="indefinite"/><animate attributeName="r" values="11;18;11;18;11;18;11;18;11;18;11;18;11;18;11;18;11;11" keyTimes="0.0000;0.0487;0.0975;0.1462;0.1949;0.2436;0.2924;0.3411;0.3898;0.4386;0.4873;0.5360;0.5847;0.6335;0.6822;0.7309;0.7797;1.0000" dur="11.799999999999999s" repeatCount="indefinite"/></circle>
+<g font-size="19" fill="#c3cbe6"><circle cx="190" cy="590" r="12" fill="#1b2753" stroke="#eef2ff" stroke-width="2.5"/><text x="210" y="597">standing: still to receive</text><circle cx="450" cy="590" r="9" fill="#0f1530" stroke="#56608a" stroke-width="2.5"/><text x="468" y="597">sat: has thrown</text></g>
+</svg>
+
+  </div>
+</section>
+
+<section data-section="06 · Play it">
+  <span class="kicker gold">Step 3 · practice · not scored</span>
+  <h2 style="margin-bottom:26px">Practice round: learn the fault rule</h2>
+  <div class="cue-timer" data-duration="60">
+<div class="ct-left"><span class="ct-clock">0:00</span><span class="ct-total"></span><div class="ct-bar"><i></i></div>
+<div class="ct-btns"><button class="ct-start">Start</button><button class="ct-reset">Reset</button><button class="ct-sound">Sound off</button></div>
+<p class="ct-hint">T start/pause · R reset</p></div>
+<div class="ct-lists">
+<div><h4>One object · nobody sits down yet</h4><ol>
+<li class="ramp" data-at="0"><span class="t">0:00</span><span>GM starts <strong>one object</strong></span></li>
+<li class="ramp" data-at="20"><span class="t">0:20</span><span>GM points out one <strong>bad throw</strong>: that player would sit, and be <strong>skipped</strong></span></li>
+<li class="ramp" data-at="40"><span class="t">0:40</span><span>Speed up: throw as soon as you catch</span></li>
+<li class="ramp" data-at="60"><span class="t">1:00</span><span><strong>Stop.</strong> No card for practice.</span></li>
+</ol></div>
+<div class="card coral"><span class="tag">From Round A · sit down if you…</span><p>don't catch an object thrown to you, or make a bad throw (the GM decides). Throwers skip you. The round ends when one player is left, or time is up.</p></div>
+</div></div>
+</section>
+
+<section data-section="06 · Play it">
+  <span class="kicker gold">Round 1 · A: learn · 2 minutes · all groups</span>
+  <h2 style="margin-bottom:26px">“Get comfortable. Nobody will bother you.”</h2>
+  <div class="cue-timer" data-duration="120">
+<div class="ct-left"><span class="ct-clock">0:00</span><span class="ct-total"></span><div class="ct-bar"><i></i></div>
+<div class="ct-btns"><button class="ct-start">Start</button><button class="ct-reset">Reset</button><button class="ct-sound">Sound off</button></div>
+<p class="ct-hint">T start/pause · R reset</p></div>
+<div class="ct-lists">
+<div><h4>Everyone</h4><ol>
+<li class="ramp" data-at="0"><span class="t">0:00</span><span>GM starts <strong>one object</strong>. Faults count from now.</span></li>
+<li class="ramp" data-at="60"><span class="t">1:00</span><span>Halfway</span></li>
+<li class="ramp" data-at="120"><span class="t">2:00</span><span><strong>Stop.</strong> Cards out.</span></li>
+</ol></div>
+
+</div></div>
+</section>
+
+<section data-section="06 · Play it">
+  <span class="prompt-badge"><span class="dot"></span>Card · 60 seconds · after Round 1</span>
+  <h2>Fill in page 2 of your sheet, on your own</h2>
+  <div class="grid-2" style="gap:28px">
+    <table class="t card-break" style="font-size:25px">
+      <tbody>
+        <tr><td>F1–F3</td><td>Circle 1–7. <span class="hl-coral">F3 is about the room around you.</span></td></tr>
+        <tr><td>T</td><td>How long was that round? <strong>Don't check a clock.</strong></td></tr>
+        <tr><td>P</td><td>The recorder tells you when you sat down, or "end".</td></tr>
+        <tr><td>N</td><td>One word for how it felt.</td></tr>
+      </tbody>
+    </table>
+    <div class="card gold" style="display:flex;flex-direction:column;justify-content:center">
+      <span class="big">Then everyone stands up</span>
+      <p>Anyone who was out comes back in. Same order, same starting player.</p>
+      <div class="mt-s"><span class="timer" data-seconds="60">1:00</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-section="06 · Play it">
+  <span class="kicker gold">Round 2 · 3 minutes · Odd groups: B (ramp) · Even groups: C (ramp + distractors)</span>
+  <h2 style="font-size:50px;margin-bottom:24px">Same ramp for everyone; distractors only in Round C</h2>
+  <div class="cue-timer" data-duration="180">
+<div class="ct-left"><span class="ct-clock">0:00</span><span class="ct-total"></span><div class="ct-bar"><i></i></div>
+<div class="ct-btns"><button class="ct-start">Start</button><button class="ct-reset">Reset</button><button class="ct-sound">Sound off</button></div>
+<p class="ct-hint">T start/pause · R reset</p></div>
+<div class="ct-lists">
+<div><h4>Everyone · the ramp</h4><ol>
+<li class="ramp" data-at="0"><span class="t">0:00</span><span>GM starts <strong>one object</strong></span></li>
+<li class="ramp" data-at="45"><span class="t">0:45</span><span>GM adds <strong>object 2</strong></span></li>
+<li class="ramp" data-at="90"><span class="t">1:30</span><span>GM adds <strong class="hl">object 3, the odd one</strong>: reverse order</span></li>
+<li class="ramp" data-at="135"><span class="t">2:15</span><span>GM adds <strong>object 4</strong></span></li>
+<li class="ramp" data-at="180"><span class="t">3:00</span><span><strong>Stop.</strong> Cards out.</span></li>
+</ol></div>
+<div><h4>Round C groups only · distractors</h4><ol>
+<li class="dist" data-at="20"><span class="t">0:20</span><span>Heckler A: wrong names</span></li>
+<li class="dist" data-at="45"><span class="t">0:45</span><span>Heckler B joins in</span></li>
+<li class="dist" data-at="90"><span class="t">1:30</span><span>Rogue thrower lobs in a spare object</span></li>
+<li class="dist" data-at="135"><span class="t">2:15</span><span>GM asks one player: “What’s 17 × 3?”</span></li>
+<li class="dist" data-at="165"><span class="t">2:45</span><span>All distractors stop: who recovers?</span></li>
+</ol></div>
+
+</div></div>
+</section>
+
+<section data-section="06 · Play it">
+  <span class="prompt-badge"><span class="dot"></span>Card · 60 seconds · after Round 2</span>
+  <h2>Fill in page 2 of your sheet, on your own</h2>
+  <div class="grid-2" style="gap:28px">
+    <table class="t card-break" style="font-size:25px">
+      <tbody>
+        <tr><td>F1–F3</td><td>Circle 1–7. <span class="hl-coral">F3 is about the room around you.</span></td></tr>
+        <tr><td>T</td><td>How long was that round? <strong>Don't check a clock.</strong></td></tr>
+        <tr><td>P</td><td>The recorder tells you when you sat down, or "end".</td></tr>
+        <tr><td>N</td><td>One word for how it felt.</td></tr>
+      </tbody>
+    </table>
+    <div class="card gold" style="display:flex;flex-direction:column;justify-content:center">
+      <span class="big">Then everyone stands up</span>
+      <p>Anyone who was out comes back in. Same order, same starting player.</p>
+      <div class="mt-s"><span class="timer" data-seconds="60">1:00</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-section="06 · Play it">
+  <span class="kicker gold">Round 3 · 3 minutes · Odd groups: C (ramp + distractors) · Even groups: B (ramp)</span>
+  <h2 style="font-size:50px;margin-bottom:24px">Same ramp for everyone; distractors only in Round C</h2>
+  <div class="cue-timer" data-duration="180">
+<div class="ct-left"><span class="ct-clock">0:00</span><span class="ct-total"></span><div class="ct-bar"><i></i></div>
+<div class="ct-btns"><button class="ct-start">Start</button><button class="ct-reset">Reset</button><button class="ct-sound">Sound off</button></div>
+<p class="ct-hint">T start/pause · R reset</p></div>
+<div class="ct-lists">
+<div><h4>Everyone · the ramp</h4><ol>
+<li class="ramp" data-at="0"><span class="t">0:00</span><span>GM starts <strong>one object</strong></span></li>
+<li class="ramp" data-at="45"><span class="t">0:45</span><span>GM adds <strong>object 2</strong></span></li>
+<li class="ramp" data-at="90"><span class="t">1:30</span><span>GM adds <strong class="hl">object 3, the odd one</strong>: reverse order</span></li>
+<li class="ramp" data-at="135"><span class="t">2:15</span><span>GM adds <strong>object 4</strong></span></li>
+<li class="ramp" data-at="180"><span class="t">3:00</span><span><strong>Stop.</strong> Cards out.</span></li>
+</ol></div>
+<div><h4>Round C groups only · distractors</h4><ol>
+<li class="dist" data-at="20"><span class="t">0:20</span><span>Heckler A: wrong names</span></li>
+<li class="dist" data-at="45"><span class="t">0:45</span><span>Heckler B joins in</span></li>
+<li class="dist" data-at="90"><span class="t">1:30</span><span>Rogue thrower lobs in a spare object</span></li>
+<li class="dist" data-at="135"><span class="t">2:15</span><span>GM asks one player: “What’s 17 × 3?”</span></li>
+<li class="dist" data-at="165"><span class="t">2:45</span><span>All distractors stop: who recovers?</span></li>
+</ol></div>
+
+</div></div>
+</section>
+
+<section data-section="06 · Play it">
+  <span class="prompt-badge"><span class="dot"></span>Card · 60 seconds · after Round 3</span>
+  <h2>Fill in page 2 of your sheet, on your own</h2>
+  <div class="grid-2" style="gap:28px">
+    <table class="t card-break" style="font-size:25px">
+      <tbody>
+        <tr><td>F1–F3</td><td>Circle 1–7. <span class="hl-coral">F3 is about the room around you.</span></td></tr>
+        <tr><td>T</td><td>How long was that round? <strong>Don't check a clock.</strong></td></tr>
+        <tr><td>P</td><td>The recorder tells you when you sat down, or "end".</td></tr>
+        <tr><td>N</td><td>One word for how it felt.</td></tr>
+      </tbody>
+    </table>
+    <div class="card gold" style="display:flex;flex-direction:column;justify-content:center">
+      <span class="big">Then everyone stands up</span>
+      <p>Anyone who was out comes back in. Same order, same starting player.</p>
+      <div class="mt-s"><span class="timer" data-seconds="60">1:00</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="center-v" data-section="06 · Play it" data-chrome="off">
+  <h2 style="font-size:96px">That's it.<br>Well played.</h2>
+  <p class="lead">Stop, you're done.</p>
+</section>
+
+<section data-section="06 · Debrief">
+  <span class="kicker gold">Process · 5 minutes</span>
+  <h2>Put your sheets into the class spreadsheet</h2>
+  <div class="grid-2" style="grid-template-columns:1.2fr .8fr;gap:32px;align-items:start">
+    <div>
+      <p class="ink2">One row per player per round: three rows each.</p>
+<pre class="code" style="font-size:18px"><span class="c">Group, Order, Player, Player type, Round, F1, F2, F3,
+  T estimate (s), Time in (s), One word</span>
+<span class="n">2</span>, <span class="s">ACB</span>, P09, Free Spirit, <span class="v">A</span>, 4, 4, 3, 100,   , easy
+<span class="n">2</span>, <span class="s">ACB</span>, P09, Free Spirit, <span class="v">C</span>, 2, 3, 6, 200, 70, chaos
+<span class="n">2</span>, <span class="s">ACB</span>, P09, Free Spirit, <span class="v">B</span>, 6, 6, 2, 120,   , flowing</pre>
+      <p class="small mt-s">Players tab. Round <strong>letters</strong>, not numbers: even groups played C second. Times in seconds (2:30 = 150). Leave Time in blank if you were still standing.</p>
+    </div>
+    <div class="card gold">
+      <span class="tag">Class sheet</span>
+      <p style="font-size:30px;font-weight:600;color:var(--ink)">[link or QR code]</p>
+      <p>The sheet works out flow index, time distortion, the B-vs-C cost by order, and a player-type table.</p>
+      <div class="mt-s"><span class="timer" data-seconds="300">5:00</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-section="06 · Debrief">
+  <span class="kicker gold">Analyse · 15 minutes</span>
+  <h2>What did we find?</h2>
+  <div class="grid-2" style="gap:28px">
+    <div class="stack">
+      <div class="card blue"><span class="tag">1 · Distraction cost</span><p>Mean flow in B vs C. How big was the drop?</p></div>
+      <div class="card coral"><span class="tag">2 · Distractors or fatigue?</span><p>Did C fall for <strong>odd</strong> groups (C last) <em>and</em> <strong>even</strong> groups (C second)?</p></div>
+      <div class="card gold"><span class="tag">3 · Time distortion</span><p>Did B feel shorter than it was, and C longer?</p></div>
+    </div>
+    <div class="card">
+      <span class="tag">Discuss</span>
+      <ul style="font-size:24px">
+        <li>Which distractor cost most: the <strong>wrong names</strong> or the <strong>rogue object</strong>?</li>
+        <li>Was anyone <strong>better</strong> in Round C? Why?</li>
+        <li>Find someone with <strong>high flow</strong> who <strong>sat down early</strong>.</li>
+        <li>Did being <strong>out</strong> change how the round felt?</li>
+        <li>Check your <strong>player-type prediction</strong>.</li>
+        <li>Who kept playing when we said stop?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="center-v" data-section="Exit ticket">
+  <span class="prompt-badge"><span class="dot"></span>Exit ticket · after the practical</span>
+  <p class="exit-ticket">“To protect flow in a <span class="blank">genre</span> game, never <span class="blank">…</span>.”</p>
+  <p class="lead mt-m">One sentence per group. We'll collect them as the class's design rules for protecting flow.</p>
+</section>
+
+<section data-section="Digital game example">
+  <div class="split" style="grid-template-columns:1.25fr .75fr;align-items:start">
+    <div class="busker-wrap"><img src="img/busker-mockup.jpg" alt="Busker game mock-up: a street performer juggling three balls with combo meter, crowd, a seagull, a message pop-up and a heckler"></div>
+    <div>
+      <span class="kicker">Digital game example · a digital twin of Juggle Circle</span>
+      <h2 style="font-size:56px;margin-bottom:22px">Busker</h2>
+      <p class="ink2" style="font-size:24px">A one-button juggling game where <strong>every difficulty setting and distractor is a switch</strong> you can flip and log.</p>
+      <ul class="key-list">
+        <li><span class="k">1</span>Combo, takings, crowd: the achievement layer</li>
+        <li><span class="k">2</span>Apex ring: immediate feedback</li>
+        <li><span class="k">4</span>Seagull: diegetic, sensory</li>
+        <li><span class="k">5</span>"New message": non-diegetic interruption</li>
+        <li><span class="k">6</span>Heckler: social and semantic</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section data-section="References">
+  <span class="kicker">References</span>
+  <div class="grid-2 refs" style="gap:40px">
+    <div>
+      <p>Bartle, R. (1996) 'Hearts, clubs, diamonds, spades: players who suit MUDs', <em>Journal of MUD Research</em>, 1(1).</p>
+      <p>Beilock, S. L. and Carr, T. H. (2001) 'On the fragility of skilled performance: what governs choking under pressure?', <em>Journal of Experimental Psychology: General</em>, 130(4), pp. 701–725.</p>
+      <p>Brown, E. and Cairns, P. (2004) 'A grounded investigation of game immersion', <em>CHI '04 Extended Abstracts</em>, pp. 1297–1300.</p>
+      <p>Csikszentmihalyi, M. (1990) <em>Flow: The Psychology of Optimal Experience</em>. New York: Harper &amp; Row.</p>
+      <p>Deci, E. L. (1971) 'Effects of externally mediated rewards on intrinsic motivation', <em>Journal of Personality and Social Psychology</em>, 18(1), pp. 105–115.</p>
+      <p>Ermi, L. and Mäyrä, F. (2005) 'Fundamental components of the gameplay experience: analysing immersion', <em>Proceedings of DiGRA 2005</em>.</p>
+      <p>Hunicke, R., LeBlanc, M. and Zubek, R. (2004) 'MDA: a formal approach to game design and game research', <em>AAAI Workshop on Challenges in Game AI</em>.</p>
+    </div>
+    <div>
+      <p>IJsselsteijn, W. A., de Kort, Y. A. W. and Poels, K. (2013) <em>The Game Experience Questionnaire</em>. Eindhoven: Technische Universiteit Eindhoven.</p>
+      <p>Jennett, C. et al. (2008) 'Measuring and defining the experience of immersion in games', <em>International Journal of Human-Computer Studies</em>, 66(9), pp. 641–661.</p>
+      <p>Lombard, M. and Ditton, T. (1997) 'At the heart of it all: the concept of presence', <em>Journal of Computer-Mediated Communication</em>, 3(2).</p>
+      <p>Marczewski, A. (2015) <em>Even Ninja Monkeys Like to Play: Gamification, Game Thinking and Motivational Design</em>.</p>
+      <p>Murray, J. H. (1997) <em>Hamlet on the Holodeck: The Future of Narrative in Cyberspace</em>. New York: Free Press.</p>
+      <p>Rheinberg, F., Vollmeyer, R. and Engeser, S. (2003) 'Die Erfassung des Flow-Erlebens', in <em>Diagnostik von Motivation und Selbstkonzept</em>. Göttingen: Hogrefe, pp. 261–279.</p>
+      <p>Ryan, R. M. and Deci, E. L. (2000) 'Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being', <em>American Psychologist</em>, 55(1), pp. 68–78.</p>
+      <p>Schell, J. (2008) <em>The Art of Game Design: A Book of Lenses</em>. Burlington, MA: Morgan Kaufmann.</p>
+      <p>Sweetser, P. and Wyeth, P. (2005) 'GameFlow: a model for evaluating player enjoyment in games', <em>Computers in Entertainment</em>, 3(3).</p>
+      <p>Tondello, G. F. et al. (2016) 'The gamification user types Hexad scale', <em>Proceedings of CHI PLAY '16</em>, pp. 229–243.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="../lib/reveal.js"></script>
+<script src="../lib/cre342.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1600, height: 900, margin: 0, minScale: 0.2, maxScale: 2,
+    center: false, hash: true, controls: true, controlsTutorial: false, progress: true,
+    slideNumber: 'c/t', transition: 'fade', transitionSpeed: 'fast', backgroundTransition: 'fade',
+    display: 'flex', preloadIframes: false, plugins: []
+  });
+  CRE342.init();
+</script>
+</body>
+</html>

@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRE342 Week 3: Rewards, Feedback and Ethics</title>
+<link rel="stylesheet" href="../lib/reset.css">
+<link rel="stylesheet" href="../lib/reveal.css">
+<link rel="stylesheet" href="../lib/cre342.css">
+<style>
+  /* Slide-specific styles for this week */
+  .refs p { font-size: 17px; line-height: 1.35; margin-bottom: 9px; color: var(--ink-2); padding-left: 1.4em; text-indent: -1.4em; }
+  .exit-ticket { font-family: var(--display); font-size: 58px; line-height: 1.15; letter-spacing: -.02em; }
+  .exit-ticket .blank { color: var(--gold); border-bottom: 4px dashed var(--gold); padding: 0 10px; }
+  .cards-4 .card h4 { font-size: 30px; }
+  .cards-4 .card p { font-size: 22px; }
+  .glory .big { font-size: 40px; }
+  .pc { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .pc .card ul { font-size: 22px; }
+  .pc .card li { margin-bottom: 8px; font-size: 22px; }
+  .pc .card .pro::marker { content: "+  "; color: var(--mint); }
+  .pc .card .con::marker { content: "−  "; color: var(--coral); }
+  .ex-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .ex-cols table.t td { font-size: 22px; padding: 10px 14px; }
+  .ex-cols table.t td:first-child { width: 48%; }
+  .fb6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .fb6 .card { padding: 20px 24px; }
+  .fb6 .card h4 { font-size: 28px; }
+  .fb6 .card p { font-size: 21px; margin: 0; }
+  .fb6 .card .ex { display: block; font-family: var(--mono); font-size: 16px; color: var(--muted); margin-top: 10px; letter-spacing: .04em; }
+  .six { background: var(--panel); border: 2px solid var(--line); border-radius: 22px; padding: 18px 26px 24px; }
+  .six .ttl { font-family: var(--display); font-weight: 700; font-size: 38px; text-align: center; color: var(--gold); letter-spacing: -.01em; }
+  .six .sub { font-size: 19px; color: var(--ink-2); text-align: center; display: block; margin-top: 2px; font-family: var(--body); font-weight: 400; letter-spacing: 0; }
+  .six .box { border: 2px dashed var(--line); border-radius: 18px; padding: 14px 18px; }
+  .six .structure { border-color: var(--blue); margin-top: 10px; }
+  .six .structure > .ttl { color: var(--blue); font-size: 32px; }
+  .six .inner { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
+  .six .inner .box .ttl { font-size: 28px; }
+  .six .inner .box.ch .ttl { color: var(--coral); } .six .inner .box.ch { border-color: rgba(255,107,107,.6); }
+  .six .inner .box.fb .ttl { color: var(--mint); } .six .inner .box.fb { border-color: rgba(79,209,165,.6); }
+  .six .inner .box.so .ttl { color: var(--violet); } .six .inner .box.so { border-color: rgba(165,139,255,.6); }
+  .six .inner .box.id .ttl { color: var(--gold); } .six .inner .box.id { border-color: rgba(255,197,61,.6); }
+  .dp5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .dp5 .card { padding: 20px 20px; }
+  .dp5 .card h4 { font-size: 25px; color: var(--coral); }
+  .dp5 .card p { font-size: 19px; margin-bottom: 10px; }
+  .dp5 .card .ex { font-size: 17px; color: var(--muted); display: block; line-height: 1.35; }
+  .law { display: grid; grid-template-columns: 80px 1fr; gap: 10px 20px; align-items: baseline; }
+  .law .y { font-family: var(--mono); font-size: 20px; color: var(--gold); }
+  .law p { font-size: 22px; margin: 0; color: var(--ink-2); }
+  .dice-table td:first-child { font-family: var(--mono); font-size: 26px; white-space: nowrap; }
+  .dice-table td { font-size: 24px !important; padding: 11px 16px !important; }
+  .rules-list li { font-size: 25px; margin-bottom: 12px; }
+  .round-tag { align-self: flex-start; display: inline-block; font-family: var(--mono); font-size: 18px; letter-spacing: .12em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; margin-right: 8px; }
+  .pot-bank { display: grid; grid-template-columns: 1fr 80px 1fr; align-items: center; gap: 0; }
+  .pot-bank .arrow { text-align: center; font-size: 44px; color: var(--mint); }
+  .play-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 36px; align-items: start; }
+  .play-grid .card li { font-size: 24px; margin-bottom: 10px; }
+  .rate { display: flex; gap: 16px; align-items: center; margin-top: 18px; }
+  .rate .scale { display: flex; gap: 8px; }
+  .rate .scale span { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 20px; color: var(--ink-2); background: var(--bg-2); }
+  /* Leaderboard (Round 4) */
+  .lb { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 20px 24px; }
+  .lb form { display: flex; gap: 10px; margin-bottom: 14px; }
+  .lb input { font-family: var(--mono); font-size: 20px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-2); color: var(--ink); width: 150px; }
+  .lb input.sc { width: 100px; }
+  .lb button { font-family: var(--mono); font-size: 17px; padding: 8px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-2); color: var(--ink-2); cursor: pointer; }
+  .lb button.add { background: var(--gold); border-color: var(--gold); color: #1a1400; font-weight: 700; }
+  .lb ol { list-style: none; padding: 0; margin: 0; counter-reset: lb; }
+  .lb li { counter-increment: lb; display: grid; grid-template-columns: 44px 1fr 90px 30px; align-items: center; gap: 10px; font-size: 24px; padding: 6px 10px; margin: 0 0 4px; border-radius: 10px; }
+  .lb li::before { content: counter(lb); font-family: var(--mono); color: var(--muted); font-size: 20px; }
+  .lb li:first-child { background: var(--gold-soft); border: 1px solid var(--gold); }
+  .lb li:first-child::before { color: var(--gold); }
+  .lb li .s { font-family: var(--mono); text-align: right; color: var(--ink); }
+  .lb li .x { cursor: pointer; color: var(--muted); font-size: 18px; text-align: center; }
+  .lb .empty { color: var(--muted); font-size: 20px; }
+  /* Vote tally (debrief) */
+  .tally { display: grid; grid-template-columns: 170px 1fr 70px 110px; gap: 12px 16px; align-items: center; }
+  .tally .lab { font-family: var(--mono); font-size: 18px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+  .tally .track { height: 40px; background: var(--bg-2); border-radius: 10px; overflow: hidden; }
+  .tally .track i { display: block; height: 100%; width: 0; border-radius: 10px; transition: width .3s; }
+  .tally .n { font-family: var(--mono); font-size: 28px; color: var(--ink); text-align: right; }
+  .tally .btns { display: flex; gap: 6px; }
+  .tally button { font-family: var(--mono); font-size: 20px; width: 46px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-2); color: var(--ink-2); cursor: pointer; }
+  .wk-row { display: grid; grid-template-columns: 1.1fr 1fr 1fr .8fr .8fr; gap: 0; }
+  .brief li { font-size: 24px; margin-bottom: 10px; }
+  .brief li b { color: var(--ink); font-weight: 650; }
+</style>
+</head>
+<body>
+<div class="deck-chrome" id="chrome"><span class="l">CRE342 · Week 3</span><span class="r" id="chrome-section"></span></div>
+<div class="reveal">
+<div class="slides">
+
+<!-- ========================================================= TITLE -->
+<section class="title-slide center-v" data-chrome="off">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start">
+    <img src="img/ulster-logo-white.png" alt="Ulster University" style="width:120px;margin:0 0 40px;opacity:.9">
+    <svg width="260" height="170" viewBox="0 0 260 170" aria-hidden="true" style="margin-top:-10px">
+      <g transform="rotate(-12 70 90)"><rect x="18" y="38" width="104" height="104" rx="20" fill="#151f45" stroke="#3aa8ff" stroke-width="4"/>
+        <circle cx="46" cy="66" r="9" fill="#3aa8ff"/><circle cx="94" cy="66" r="9" fill="#3aa8ff"/><circle cx="70" cy="90" r="9" fill="#3aa8ff"/><circle cx="46" cy="114" r="9" fill="#3aa8ff"/><circle cx="94" cy="114" r="9" fill="#3aa8ff"/></g>
+      <g transform="rotate(14 190 80)"><rect x="140" y="28" width="100" height="100" rx="20" fill="#151f45" stroke="#ffc53d" stroke-width="4"/>
+        <circle cx="167" cy="55" r="9" fill="#ffc53d"/><circle cx="213" cy="55" r="9" fill="#ffc53d"/><circle cx="167" cy="78" r="9" fill="#ffc53d"/><circle cx="213" cy="78" r="9" fill="#ffc53d"/><circle cx="167" cy="101" r="9" fill="#ffc53d"/><circle cx="213" cy="101" r="9" fill="#ffc53d"/></g>
+    </svg>
+  </div>
+  <span class="course">CRE342 · Game Mechanics &amp; Gameplay Design · Week 3</span>
+  <h1>Rewards, feedback<br>&amp; <span class="hl">playing fair</span></h1>
+  <p class="lead">Designing reward systems, feedback loops and ethical engagement</p>
+  <p class="small mt-m">BSc (Hons) Game Design &amp; Development</p>
+</section>
+
+<!-- ========================================================= HOOK -->
+<section class="center-v" data-section="Warm-up">
+  <span class="prompt-badge"><span class="dot"></span>Think · 30 seconds</span>
+  <h2 style="font-size:80px;max-width:1350px">What's the best reward a game ever gave you?</h2>
+  <p class="lead fragment rise">Was it a <strong>thing</strong>… or a <strong>feeling</strong>?</p>
+  <div class="mt-m fragment rise"><span class="timer" data-seconds="30">0:30</span> <span class="small" style="margin-left:14px">click to start · tell the person next to you</span></div>
+</section>
+
+<!-- ========================================================= OUTCOMES -->
+<section data-section="Today">
+  <span class="kicker">Today</span>
+  <h2>By the end of today you can…</h2>
+  <div class="grid-2 mt-m" style="gap:24px">
+    <div class="card blue fragment rise"><span class="num">01</span><h3>Design a reward system</h3><p>using short- and long-term, tiered, milestone, fixed and random rewards in fast and slow loops.</p></div>
+    <div class="card mint fragment rise"><span class="num">02</span><h3>Design feedback</h3><p>that is immediate, clear, layered across the senses and accessible.</p></div>
+    <div class="card gold fragment rise"><span class="num">03</span><h3>Separate games from gamification</h3><p>and explain why points, badges and leaderboards alone aren't enough.</p></div>
+    <div class="card coral fragment rise"><span class="num">04</span><h3>Judge a reward system's ethics</h3><p>and redesign a dark pattern so it respects the player.</p></div>
+  </div>
+</section>
+
+<section data-section="Today">
+  <span class="kicker">The route</span>
+  <h2>Seven stops</h2>
+  <div class="grid-4 mt-s" style="gap:20px">
+    <div class="card"><span class="tag">01</span><h4>Where we are</h4><p style="font-size:22px">Flow and motivation, recapped</p></div>
+    <div class="card blue"><span class="tag">02</span><h4>Rewards &amp; loops</h4><p style="font-size:22px">Types, timing, loops, schedules</p></div>
+    <div class="card mint"><span class="tag">03</span><h4>Feedback</h4><p style="font-size:22px">Action, response, reading it</p></div>
+    <div class="card violet"><span class="tag">04</span><h4>Gamification</h4><p style="font-size:22px">PBL and six engagement factors</p></div>
+    <div class="card coral"><span class="tag">05</span><h4>Ethics</h4><p style="font-size:22px">Dark patterns and loot boxes</p></div>
+    <div class="card gold"><span class="tag">06</span><h4>Roll for Reward</h4><p style="font-size:22px">Four rounds, four kinds of reward</p></div>
+    <div class="card gold"><span class="tag">07</span><h4>Design task</h4><p style="font-size:22px">Build your own reward system</p></div>
+  </div>
+</section>
+
+<!-- ========================================================= 01 WHERE WE ARE -->
+<section class="divider" data-chrome="off">
+  <div class="sec-num">01</div>
+  <h2>Where we are</h2>
+  <p class="lead">Last week you measured flow. Two weeks ago, motivation.</p>
+</section>
+
+<section data-section="01 · Where we are">
+  <span class="kicker">Week 1, one step further</span>
+  <h2>Rewards can add fun, or replace it</h2>
+  <div class="grid-3">
+    <div class="card blue"><span class="tag">Intrinsic</span><p>The activity is the reward: mastery, curiosity, autonomy, relatedness.</p></div>
+    <div class="card gold"><span class="tag">Extrinsic</span><p>The reward is outside the activity: points, loot, badges, rank, money.</p></div>
+    <div class="card coral"><span class="tag">Overjustification</span><p>Expected, controlling rewards can crowd out the intrinsic reason to play.</p></div>
+  </div>
+  <div class="card mt-m fragment rise" style="display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center">
+    <span class="kicker mint" style="margin:0">Today</span>
+    <p style="margin:0;font-size:28px;color:var(--ink)">Week 1 asked <em>why</em> rewards work. Week 2 showed flow needs <strong class="hl-mint">immediate feedback</strong>. Today asks <strong>how to design rewards and feedback</strong>: what kind, how often, how they feel, and when to stop.</p>
+  </div>
+</section>
+
+<!-- ========================================================= 02 REWARDS & LOOPS -->
+<section class="divider" data-chrome="off">
+  <div class="sec-num">02</div>
+  <h2>Rewards<br>&amp; loops</h2>
+  <p class="lead">The motivation engine: what you give, when, and how often</p>
+</section>
+
+<section data-section="02 · Rewards">
+  <span class="kicker">Hallford &amp; Hallford (2001)</span>
+  <h2>Four things a reward can give</h2>
+  <div class="grid-4 glory">
+    <div class="card gold fragment rise"><span class="tag">Glory</span><span class="big">Recognition</span><p>Achievements, titles, a high score. Changes nothing in play; tells everyone you did it.</p></div>
+    <div class="card mint fragment rise"><span class="tag">Sustenance</span><span class="big">Keep going</span><p>Health, ammo, armour, extra lives. Keeps what you have.</p></div>
+    <div class="card blue fragment rise"><span class="tag">Access</span><span class="big">New places</span><p>Keys, unlocked areas, new levels. Opens content you couldn't reach.</p></div>
+    <div class="card violet fragment rise"><span class="tag">Facility</span><span class="big">New powers</span><p>Double jump, a new weapon, bigger inventory. Lets you do more.</p></div>
+  </div>
+  <p class="lead mt-m fragment rise">Rewards also carry <strong>information</strong> ("you did that right") and set the <strong>pace</strong> of the game.</p>
+</section>
+
+<section data-section="02 · Rewards">
+  <span class="kicker">Time frame</span>
+  <h2>Short-term and long-term rewards</h2>
+  <svg class="fig" viewBox="0 0 1400 330" role="img" aria-label="A timeline: short-term rewards arrive every few seconds; long-term rewards arrive after long stretches of effort">
+    <line x1="60" y1="170" x2="1350" y2="170" stroke="#2a3768" stroke-width="3"/>
+    <path d="M1340,162 L1356,170 L1340,178" fill="#2a3768"/>
+    <text x="1350" y="210" text-anchor="end" fill="#8d98bf" font-size="18" style="font-family:var(--mono)">TIME →</text>
+    <text x="60" y="44" fill="#ffc53d" font-size="26" font-weight="700" style="font-family:var(--display)">Short-term: every few seconds</text>
+    <g class="fragment" data-fragment-index="1">
+      <circle cx="90" cy="120" r="11" fill="#ffc53d"/><circle cx="140" cy="120" r="11" fill="#ffc53d"/><circle cx="175" cy="120" r="11" fill="#ffc53d"/><circle cx="240" cy="120" r="11" fill="#ffc53d"/><circle cx="300" cy="120" r="11" fill="#ffc53d"/><circle cx="330" cy="120" r="11" fill="#ffc53d"/><circle cx="410" cy="120" r="11" fill="#ffc53d"/><circle cx="470" cy="120" r="11" fill="#ffc53d"/><circle cx="505" cy="120" r="11" fill="#ffc53d"/><circle cx="580" cy="120" r="11" fill="#ffc53d"/><circle cx="640" cy="120" r="11" fill="#ffc53d"/><circle cx="700" cy="120" r="11" fill="#ffc53d"/><circle cx="735" cy="120" r="11" fill="#ffc53d"/><circle cx="800" cy="120" r="11" fill="#ffc53d"/><circle cx="870" cy="120" r="11" fill="#ffc53d"/><circle cx="905" cy="120" r="11" fill="#ffc53d"/><circle cx="970" cy="120" r="11" fill="#ffc53d"/><circle cx="1030" cy="120" r="11" fill="#ffc53d"/><circle cx="1070" cy="120" r="11" fill="#ffc53d"/><circle cx="1140" cy="120" r="11" fill="#ffc53d"/><circle cx="1200" cy="120" r="11" fill="#ffc53d"/><circle cx="1240" cy="120" r="11" fill="#ffc53d"/><circle cx="1300" cy="120" r="11" fill="#ffc53d"/>
+      <text x="60" y="82" fill="#c3cbe6" font-size="20">coins · XP ticks · pickups · hit markers</text>
+    </g>
+    <g class="fragment" data-fragment-index="2">
+      <rect x="60" y="232" width="560" height="22" rx="11" fill="rgba(58,168,255,.25)" stroke="#3aa8ff" stroke-width="2"/>
+      <rect x="640" y="232" width="660" height="22" rx="11" fill="rgba(58,168,255,.25)" stroke="#3aa8ff" stroke-width="2"/>
+      <path d="M620,218 l9,18 20,3 -15,14 4,20 -18,-10 -18,10 4,-20 -15,-14 20,-3z" fill="#3aa8ff" transform="translate(-10,-4)"/>
+      <path d="M1300,218 l9,18 20,3 -15,14 4,20 -18,-10 -18,10 4,-20 -15,-14 20,-3z" fill="#3aa8ff" transform="translate(-10,-4)"/>
+      <text x="60" y="300" fill="#3aa8ff" font-size="26" font-weight="700" style="font-family:var(--display)">Long-term: after sustained effort</text>
+      <text x="480" y="300" fill="#c3cbe6" font-size="20">finish a quest · beat a boss · complete a chapter</text>
+    </g>
+  </svg>
+  <p class="lead mt-s fragment rise" data-fragment-index="3">Short-term rewards keep the <strong class="hl-gold">moment</strong> moving. Long-term rewards give the <strong class="hl">session</strong> a reason.</p>
+</section>
+
+<section data-section="02 · Rewards">
+  <span class="kicker">Structure</span>
+  <h2>Tiered and milestone rewards</h2>
+  <div class="grid-2" style="gap:28px">
+    <div class="card blue">
+      <span class="tag">Tiered · rewards grow with the level</span>
+      <p style="font-size:24px">Bronze → silver → gold. Basic to advanced gear. Currency worth more at each tier.</p>
+      <ul style="font-size:22px">
+        <li><strong>Clear criteria</strong> for moving up a tier</li>
+        <li><strong>Each tier clearly better</strong> than the last</li>
+        <li><strong>Visible progress</strong>: badges, bars, ranks</li>
+      </ul>
+    </div>
+    <div class="card gold">
+      <span class="tag">Milestone · reward for reaching a point</span>
+      <p style="font-size:24px">Finish a chapter, reach a score, defeat a major boss.</p>
+      <ul style="font-size:22px">
+        <li><strong>Defined</strong> and told to the player in advance</li>
+        <li><strong>Meaningful</strong>: worth the effort it took</li>
+        <li><strong>Tied to the story</strong> so it deepens immersion</li>
+      </ul>
+    </div>
+  </div>
+  <p class="lead mt-m fragment rise">Together they give players <strong>goals to set and hit</strong>, which is what long-term engagement is made of.</p>
+</section>
+
+<section data-section="02 · Rewards">
+  <span class="kicker">Keeping it going</span>
+  <h2>Motivation has to be sustained</h2>
+  <div class="grid-4 cards-4">
+    <div class="card fragment rise"><span class="tag">01</span><h4>Novelty vs familiarity</h4><p>New content, rewards and challenges on top of core systems that stay the same.</p></div>
+    <div class="card fragment rise"><span class="tag">02</span><h4>Long-term progression</h4><p>Seasons, mastery ranks, reputations: something to aim at next month.</p></div>
+    <div class="card fragment rise"><span class="tag">03</span><h4>Pacing, not flooding</h4><p>Too many rewards and each one means nothing; too few and players burn out.</p></div>
+    <div class="card gold fragment rise"><span class="tag">=</span><h4>Sustainable design</h4><p>Players stay <em>and</em> are glad they did: retention plus satisfaction.</p></div>
+  </div>
+  <p class="lead mt-l fragment rise">Retention on its own isn't the goal. A slot machine has great retention.</p>
+</section>
+
+<section data-section="02 · Loops">
+  <div class="split" style="grid-template-columns:.95fr 1.05fr">
+    <div>
+      <span class="kicker">Reward loops</span>
+      <h2>The core engagement cycle</h2>
+      <p class="ink2">Act, get rewarded, want to act again. Every game runs several of these loops at once, <strong>nested inside each other</strong>.</p>
+      <p class="ink2 fragment rise" data-fragment-index="2">The small loops keep your hands busy. The big loops give the small ones a <strong>purpose</strong>.</p>
+    </div>
+    <svg class="fig" viewBox="0 0 660 620" role="img" aria-label="Four nested reward loops: seconds, minutes, hours and weeks">
+      <circle cx="330" cy="320" r="285" fill="none" stroke="#a58bff" stroke-width="3" stroke-dasharray="6 8" class="fragment" data-fragment-index="1"/>
+      <circle cx="330" cy="320" r="210" fill="none" stroke="#4fd1a5" stroke-width="3" stroke-dasharray="6 8" class="fragment" data-fragment-index="1"/>
+      <circle cx="330" cy="320" r="135" fill="none" stroke="#3aa8ff" stroke-width="3" stroke-dasharray="6 8" class="fragment" data-fragment-index="1"/>
+      <circle cx="330" cy="320" r="62" fill="rgba(255,197,61,.15)" stroke="#ffc53d" stroke-width="3"/>
+      <text x="330" y="314" text-anchor="middle" fill="#ffc53d" font-size="20" style="font-family:var(--mono)">SECONDS</text>
+      <text x="330" y="342" text-anchor="middle" fill="#eef2ff" font-size="19">grab a coin</text>
+      <g class="fragment" data-fragment-index="1">
+        <text x="330" y="212" text-anchor="middle" fill="#3aa8ff" font-size="20" style="font-family:var(--mono)">MINUTES</text>
+        <text x="330" y="238" text-anchor="middle" fill="#eef2ff" font-size="19">clear a level</text>
+        <text x="330" y="138" text-anchor="middle" fill="#4fd1a5" font-size="20" style="font-family:var(--mono)">HOURS</text>
+        <text x="330" y="164" text-anchor="middle" fill="#eef2ff" font-size="19">finish a world</text>
+        <text x="330" y="63" text-anchor="middle" fill="#a58bff" font-size="20" style="font-family:var(--mono)">WEEKS</text>
+        <text x="330" y="89" text-anchor="middle" fill="#eef2ff" font-size="19">100% the game · a season</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<section data-section="02 · Loops">
+  <span class="kicker">Therese's examples, by speed</span>
+  <h2>Fast loops and slow loops</h2>
+  <div class="ex-cols">
+    <div class="card gold">
+      <span class="tag">Fast, frequent · immediate gratification</span>
+      <table class="t">
+        <tr><td>Collecting coins or rings</td><td>Super Mario Bros, Sonic</td></tr>
+        <tr><td>Loot and XP from enemies</td><td>Diablo III</td></tr>
+        <tr><td>Daily quests</td><td>Genshin Impact</td></tr>
+        <tr><td>Small wins every move</td><td>Candy Crush Saga</td></tr>
+        <tr><td>Quick early levelling</td><td>Borderlands 3</td></tr>
+      </table>
+    </div>
+    <div class="card blue">
+      <span class="tag">Slow, infrequent · delayed gratification</span>
+      <table class="t">
+        <tr><td>Completing a story arc</td><td>The Witcher 3</td></tr>
+        <tr><td>Endgame raids</td><td>World of Warcraft</td></tr>
+        <tr><td>Seasonal events</td><td>Fortnite, Destiny 2</td></tr>
+        <tr><td>Prestige after max level</td><td>Call of Duty</td></tr>
+        <tr><td>Long-term gathering</td><td>Animal Crossing: NH</td></tr>
+      </table>
+    </div>
+  </div>
+  <p class="lead mt-m fragment rise">Fast loops keep <strong class="hl-gold">momentum</strong> in repetitive play. Slow loops make the reward <strong class="hl">worth more</strong> because you waited.</p>
+</section>
+
+<section data-section="02 · Loops">
+  <span class="kicker">Reinforcement schedules · Week 1's grid, applied</span>
+  <h2>Fixed or random?</h2>
+  <div class="pc">
+    <div class="card blue">
+      <span class="tag">Fixed · predictable</span>
+      <p style="font-size:23px">Level-up bonuses, quest rewards, achievement unlocks.</p>
+      <ul><li class="pro">Clear goals and expectations</li><li class="pro">Easier to balance progression</li><li class="con">Can feel monotonous if overused</li><li class="con">Less excitement</li></ul>
+    </div>
+    <div class="card coral">
+      <span class="tag">Random · unpredictable</span>
+      <p style="font-size:23px">Random drops, loot boxes, gacha, surprise events.</p>
+      <ul><li class="pro">Surprise, curiosity, replayability</li><li class="pro">Very high engagement</li><li class="con">Feels unfair after a bad streak</li><li class="con">Gambling-like when money is involved</li></ul>
+    </div>
+  </div>
+  <div class="grid-2 mt-m" style="gap:28px">
+    <p class="fragment rise ink2" style="font-size:25px"><strong class="hl">Continuous</strong> reinforcement (every time) is best for <strong>teaching</strong> a new behaviour.</p>
+    <p class="fragment rise ink2" style="font-size:25px"><strong class="hl-coral">Partial</strong> reinforcement (sometimes) keeps a behaviour going <strong>longest</strong>.</p>
+  </div>
+</section>
+
+<section class="center-v" data-section="02 · Loops">
+  <span class="prompt-badge"><span class="dot"></span>Pair · 90 seconds</span>
+  <h2 style="font-size:66px;max-width:1350px">Pick a game you both know. Find…</h2>
+  <div class="grid-3 mt-s" style="gap:24px">
+    <div class="card gold fragment rise"><span class="big" style="font-size:36px">one fast loop</span><p>What do you do every few seconds, and what do you get?</p></div>
+    <div class="card blue fragment rise"><span class="big" style="font-size:36px">one slow loop</span><p>What are you working towards this week?</p></div>
+    <div class="card coral fragment rise"><span class="big" style="font-size:36px">one random reward</span><p>What's the schedule? Is money involved?</p></div>
+  </div>
+  <div class="mt-m"><span class="timer" data-seconds="90">1:30</span></div>
+</section>
+
+<!-- ========================================================= 03 FEEDBACK -->
+<section class="divider" data-chrome="off">
+  <div class="sec-num">03</div>
+  <h2>Feedback</h2>
+  <p class="lead">The bridge between what the player does and what the system says back</p>
+</section>
+
+<section data-section="03 · Feedback">
+  <span class="kicker">Input → response</span>
+  <h2>Every input needs an answer</h2>
+  <svg class="fig" viewBox="0 0 1400 300" role="img" aria-label="The input-response loop: the player acts, the game responds, the player interprets the response and acts again">
+    <defs><marker id="fa3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8d98bf"/></marker></defs>
+    <rect x="40" y="60" width="340" height="120" rx="20" fill="rgba(58,168,255,.14)" stroke="#3aa8ff" stroke-width="2"/>
+    <text x="210" y="112" text-anchor="middle" fill="#3aa8ff" font-size="20" style="font-family:var(--mono)">1 · PLAYER ACTS</text>
+    <text x="210" y="148" text-anchor="middle" fill="#eef2ff" font-size="24">press, move, tap</text>
+    <path d="M390,120 L520,120" stroke="#8d98bf" stroke-width="3" marker-end="url(#fa3)"/>
+    <rect x="530" y="60" width="340" height="120" rx="20" fill="rgba(79,209,165,.13)" stroke="#4fd1a5" stroke-width="2" class="fragment" data-fragment-index="1"/>
+    <text x="700" y="112" text-anchor="middle" fill="#4fd1a5" font-size="20" style="font-family:var(--mono)" class="fragment" data-fragment-index="1">2 · GAME RESPONDS</text>
+    <text x="700" y="148" text-anchor="middle" fill="#eef2ff" font-size="24" class="fragment" data-fragment-index="1">sound, motion, numbers</text>
+    <path d="M880,120 L1010,120" stroke="#8d98bf" stroke-width="3" marker-end="url(#fa3)" class="fragment" data-fragment-index="2"/>
+    <rect x="1020" y="60" width="340" height="120" rx="20" fill="rgba(255,197,61,.13)" stroke="#ffc53d" stroke-width="2" class="fragment" data-fragment-index="2"/>
+    <text x="1190" y="112" text-anchor="middle" fill="#ffc53d" font-size="20" style="font-family:var(--mono)" class="fragment" data-fragment-index="2">3 · PLAYER READS IT</text>
+    <text x="1190" y="148" text-anchor="middle" fill="#eef2ff" font-size="24" class="fragment" data-fragment-index="2">"that worked", "try again"</text>
+    <path d="M1190,190 C1190,280 210,280 210,192" fill="none" stroke="#8d98bf" stroke-width="3" stroke-dasharray="8 8" marker-end="url(#fa3)" class="fragment" data-fragment-index="3"/>
+    <text x="700" y="262" text-anchor="middle" fill="#8d98bf" font-size="20" class="fragment" data-fragment-index="3">and acts again, a little better</text>
+  </svg>
+  <div class="grid-2 mt-s" style="gap:28px">
+    <div class="card mint fragment rise"><span class="tag">Good</span><p><strong>Responsive, clear, consistent.</strong> Jump always jumps, now. Builds trust and supports flow.</p></div>
+    <div class="card coral fragment rise"><span class="tag">Poor</span><p><strong>Lag, unclear outcomes.</strong> "Did that hit?" Players blame the game, then leave it.</p></div>
+  </div>
+</section>
+
+<section data-section="03 · Feedback">
+  <span class="kicker">Six kinds of feedback</span>
+  <h2>What is the feedback for?</h2>
+  <div class="fb6">
+    <div class="card blue fragment rise"><h4>Immediate</h4><p>Confirms the input landed.</p><span class="ex">hit marker · button click</span></div>
+    <div class="card blue fragment rise"><h4>Delayed</h4><p>Reflection after the moment.</p><span class="ex">end-of-match stats · summaries</span></div>
+    <div class="card mint fragment rise"><h4>Positive</h4><p>Reinforces what worked.</p><span class="ex">XP pop · combo counter</span></div>
+    <div class="card coral fragment rise"><h4>Negative</h4><p>Signals a mistake so you adjust.</p><span class="ex">health loss · red flash</span></div>
+    <div class="card gold fragment rise"><h4>Informational</h4><p>Teaches and guides.</p><span class="ex">"too heavy" · map marker</span></div>
+    <div class="card violet fragment rise"><h4>Aesthetic</h4><p>Makes it feel good and deepens immersion.</p><span class="ex">particles · music swell</span></div>
+  </div>
+</section>
+
+<section data-section="03 · Feedback">
+  <span class="kicker">Worked example · Super Mario Bros</span>
+  <h2>One coin, five layers</h2>
+  <table class="t" style="font-size:25px">
+    <tr><th style="width:220px">Layer</th><th>What happens</th><th style="width:300px">Job</th></tr>
+    <tr class="fragment rise"><td><span class="hl-gold">Audio</span></td><td>The "bling": instant and unmistakable</td><td>immediate · aesthetic</td></tr>
+    <tr class="fragment rise"><td><span class="hl-mint">Motion</span></td><td>The coin pops out of the block and spins</td><td>immediate · aesthetic</td></tr>
+    <tr class="fragment rise"><td><span class="hl">UI</span></td><td>Coin counter +1, score +200</td><td>informational · positive</td></tr>
+    <tr class="fragment rise"><td><span class="hl-violet">Progress</span></td><td>Every 100 coins: an extra life</td><td>long-term · sustenance</td></tr>
+    <tr class="fragment rise"><td><span class="hl-coral">Teaching</span></td><td>Coin trails show where to jump</td><td>informational · guiding</td></tr>
+  </table>
+  <p class="lead mt-m fragment rise">A fast loop (the coin) feeding a slow loop (the 1-up), with <strong>every sense saying the same thing</strong>.</p>
+</section>
+
+<section data-section="03 · Feedback">
+  <span class="kicker">Audio-visual feedback design</span>
+  <h2>Layer the senses, and design for everyone</h2>
+  <div class="grid-4 cards-4">
+    <div class="card blue fragment rise"><span class="tag">Visual</span><h4>See it</h4><p>Animations, particle effects, UI cues, screen shake.</p></div>
+    <div class="card gold fragment rise"><span class="tag">Audio</span><h4>Hear it</h4><p>Success chimes, failure sounds, narration, music changes.</p></div>
+    <div class="card mint fragment rise"><span class="tag">Multisensory</span><h4>Layer it</h4><p>Cues that agree across senses and haptics are stronger and more immersive.</p></div>
+    <div class="card violet fragment rise"><span class="tag">Accessibility</span><h4>Offer it twice</h4><p>Colour-blind modes, captions, haptics. Never one channel only.</p></div>
+  </div>
+  <p class="lead mt-l fragment rise">Watch: <a href="https://www.youtube.com/watch?v=Fy0aCDmgnxg" target="_blank" rel="noopener"><strong>Juice it or lose it</strong></a> (Jonasson &amp; Purho, 2012): the same game, with and without feedback.</p>
+</section>
+
+<!-- ========================================================= 04 GAMIFICATION -->
+<section class="divider" data-chrome="off">
+  <div class="sec-num">04</div>
+  <h2>Gamification</h2>
+  <p class="lead">Taking game elements out of games</p>
+</section>
+
+<section data-section="04 · Gamification">
+  <span class="kicker">Deterding et al. (2011)</span>
+  <h2>“The use of game design elements in non-game contexts”</h2>
+  <table class="t">
+    <tr><th style="width:220px"></th><th>Game design</th><th>Gamification</th></tr>
+    <tr class="fragment rise"><td>Purpose</td><td>Immersive, entertaining experiences</td><td>Engagement and motivation in something that isn't a game</td></tr>
+    <tr class="fragment rise"><td>Where</td><td>Complete games, played for their own sake</td><td>Education, fitness, marketing, training, productivity</td></tr>
+    <tr class="fragment rise"><td>Elements</td><td>Full mechanics, narrative, interactive play</td><td>Selected elements (points, badges, leaderboards) added to an existing activity</td></tr>
+  </table>
+  <p class="lead mt-m fragment rise">Duolingo, Strava, loyalty cards, and this module's weekly quizzes.</p>
+</section>
+
+<section data-section="04 · Gamification">
+  <span class="kicker">The usual toolkit</span>
+  <h2>Points, badges, leaderboards (PBL)</h2>
+  <div class="grid-3">
+    <div class="card gold fragment rise"><span class="tag">Points</span><h4>A number for progress</h4><p>Awarded for tasks and milestones. Immediate feedback and a sense of accomplishment.</p></div>
+    <div class="card blue fragment rise"><span class="tag">Badges</span><h4>A symbol of achievement</h4><p>Earned for goals, challenges and expertise. A status symbol that points to mastery.</p></div>
+    <div class="card coral fragment rise"><span class="tag">Leaderboards</span><h4>A ranking against others</h4><p>Competition and social comparison. Motivates the people near the top.</p></div>
+  </div>
+  <div class="card mt-m fragment rise" style="border-color:var(--coral)">
+    <p style="font-size:26px;margin:0"><strong class="hl-coral">The catch:</strong> a global leaderboard motivates the top ten and quietly tells everyone else they're losing. Fixes: <strong>show players near you</strong>, <strong>friends only</strong>, <strong>weekly resets</strong>, <strong>small leagues</strong>.</p>
+  </div>
+</section>
+
+<section data-section="04 · Gamification">
+  <span class="kicker">Beyond PBL</span>
+  <h2>Challenges, quests and social play</h2>
+  <div class="grid-3">
+    <div class="card fragment rise"><span class="tag">Challenges</span><h4>Test a skill</h4><p>Often timed or with a target. Push people to their limits, and give achievement when they get there.</p></div>
+    <div class="card fragment rise"><span class="tag">Quests</span><h4>Give direction</h4><p>Structured missions with a clear objective. Add purpose and a bit of narrative to routine tasks.</p></div>
+    <div class="card fragment rise"><span class="tag">Social</span><h4>Involve others</h4><p>Sharing, teams, communities. Collaboration and belonging, not just competition.</p></div>
+  </div>
+  <p class="lead mt-l fragment rise">These reach the <strong>intrinsic</strong> needs from Week 1: competence, autonomy, relatedness. PBL mostly doesn't.</p>
+</section>
+
+<section data-section="04 · Engagement">
+  <div class="split" style="grid-template-columns:.8fr 1.2fr">
+    <div>
+      <span class="kicker">McGinnis et al. (2008)</span>
+      <h2>Six essential engaging factors</h2>
+      <p class="ink2" style="font-size:26px"><strong>Fun</strong> contains everything. <strong>Structure</strong> holds challenge and feedback. <strong>Social</strong> and <strong>identity</strong> sit alongside.</p>
+      <p class="ink2 fragment rise" style="font-size:26px">Use it as a checklist: a design that's missing one of the six usually feels it.</p>
+    </div>
+    <div class="six" role="img" aria-label="Six essential engaging factors (McGinnis et al., 2008): Fun contains Structure, which contains Challenge and Feedback; Social and Identity sit inside Fun alongside Structure">
+      <div class="ttl">FUN</div>
+      <div class="box structure">
+        <div class="ttl">STRUCTURE<span class="sub">choice · control · goals · rules</span></div>
+        <div class="inner">
+          <div class="box ch"><div class="ttl">CHALLENGE<span class="sub">competency · competition · curiosity · content</span></div></div>
+          <div class="box fb"><div class="ttl">FEEDBACK<span class="sub">sensory information</span></div></div>
+        </div>
+      </div>
+      <div class="inner">
+        <div class="box so"><div class="ttl">SOCIAL<span class="sub">collaboration · cooperation · relationships · teamwork</span></div></div>
+        <div class="box id"><div class="ttl">IDENTITY<span class="sub">escapism · fantasy · presence · role-play · recognition</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= 05 ETHICS -->
+<section class="divider" data-chrome="off">
+  <div class="sec-num">05</div>
+  <h2>Ethics &amp;<br>dark patterns</h2>
+  <p class="lead">When the reward system works for the business and against the player</p>
+</section>
+
+<section data-section="05 · Ethics">
+  <span class="kicker coral">Week 1's temporal, monetary and social patterns, in reward design</span>
+  <h2>Five reward dark patterns</h2>
+  <div class="dp5">
+    <div class="card fragment rise"><h4>Loot boxes</h4><p>Paid random rewards on a variable-ratio schedule.</p><span class="ex">Overwatch (2016) · CS:GO keys · FIFA packs</span></div>
+    <div class="card fragment rise"><h4>Pay to win</h4><p>Money buys a competitive edge over players who don't pay.</p><span class="ex">Clash of Clans gems · Diablo Immortal</span></div>
+    <div class="card fragment rise"><h4>Grind walls</h4><p>Progress slowed on purpose, with a paid way round.</p><span class="ex">Diablo Immortal · FUT squad challenges</span></div>
+    <div class="card fragment rise"><h4>Scarcity &amp; urgency</h4><p>Countdowns and "limited time" push impulse buys.</p><span class="ex">Fortnite Item Shop · battle-pass timers</span></div>
+    <div class="card fragment rise"><h4>Forced continuity</h4><p>Free trial that renews at full price unless you cancel.</p><span class="ex">£1 first month subscriptions · VIP trials</span></div>
+  </div>
+  <p class="lead mt-m fragment rise">Short-term revenue, long-term cost: lost trust, bad press and <strong class="hl-coral">regulation</strong>.</p>
+</section>
+
+<section data-section="05 · Ethics">
+  <span class="kicker coral">Case study</span>
+  <h2>Loot boxes</h2>
+  <div class="grid-2" style="gap:36px;align-items:start">
+    <div class="stack">
+      <div class="card"><span class="tag">Why they work</span><p style="font-size:23px">Variable-ratio reward, a near-miss when you get a duplicate, and a public reveal. Structurally, they look like gambling (Drummond &amp; Sauer, 2018).</p></div>
+      <div class="card coral fragment rise"><span class="tag">The concern</span><p style="font-size:23px">Loot box spending is linked to problem gambling severity (Zendle &amp; Cairns, 2018). The heaviest spenders are the most vulnerable players.</p></div>
+      <div class="card mint fragment rise"><span class="tag">Fairer alternatives</span><p style="font-size:23px">Cosmetic only · visible odds · earnable in play · buy the item directly · "pity" guarantees.</p></div>
+    </div>
+    <div class="card fragment rise">
+      <span class="tag">How regulators responded</span>
+      <div class="law">
+        <span class="y">2017</span><p>China and Apple's App Store require published drop odds.</p>
+        <span class="y">2018</span><p>Belgium rules paid loot boxes are gambling and bans them.</p>
+        <span class="y">2020</span><p>PEGI adds "In-game purchases (includes random items)".</p>
+        <span class="y">2022</span><p>UK decides not to legislate and asks the industry to regulate itself; Overwatch 2 drops loot boxes for a shop and battle pass.</p>
+        <span class="y">2023</span><p>UK industry principles: odds disclosed, parental consent for under-18s.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="center-v" data-section="05 · Ethics">
+  <span class="prompt-badge"><span class="dot"></span>Groups of 3 · 3 minutes</span>
+  <h2 style="font-size:68px;max-width:1350px">Engaging or exploitative?</h2>
+  <p class="lead">Pick one: <strong>FIFA / FC Ultimate Team packs</strong>, <strong>Overwatch's original loot boxes</strong>, or a game you play.</p>
+  <div class="grid-2 mt-m" style="gap:24px">
+    <div class="card coral fragment rise"><span class="tag">1 · Diagnose</span><p>Which dark pattern(s)? Which reinforcement schedule? Who gets hurt most?</p></div>
+    <div class="card mint fragment rise"><span class="tag">2 · Redesign</span><p>Change one rule so it keeps the excitement but respects the player.</p></div>
+  </div>
+  <div class="mt-m"><span class="timer" data-seconds="180">3:00</span></div>
+</section>
+
+<section data-section="05 · Ethics">
+  <span class="kicker mint">Designing ethically</span>
+  <h2>Avoiding manipulative design</h2>
+  <div class="grid-4 cards-4">
+    <div class="card mint fragment rise"><span class="tag">01</span><h4>Respect agency</h4><p>No coercive paywalls. Players' time and choices are valued, not forced.</p></div>
+    <div class="card mint fragment rise"><span class="tag">02</span><h4>Engage sustainably</h4><p>Build on fun, mastery and community, not compulsion.</p></div>
+    <div class="card mint fragment rise"><span class="tag">03</span><h4>Be transparent</h4><p>Clear rules, visible odds, honest prices.</p></div>
+    <div class="card mint fragment rise"><span class="tag">04</span><h4>Protect players</h4><p>Fairness and inclusion; extra care for children and vulnerable players.</p></div>
+  </div>
+  <div class="card gold mt-m fragment rise"><p style="font-size:30px;margin:0;color:var(--ink)">The test: <strong>would the player still choose this if they fully understood what it was doing?</strong></p></div>
+</section>
+
+<section data-section="Summary">
+  <span class="kicker">Take away</span>
+  <h2>Five things to remember</h2>
+  <div class="stack" style="max-width:1300px">
+    <div class="card fragment rise"><p style="font-size:28px"><strong class="hl">Rewards give glory, sustenance, access or facility</strong>, over the short or long term, in tiers and milestones.</p></div>
+    <div class="card fragment rise"><p style="font-size:28px"><strong class="hl">Loops nest:</strong> fast loops keep momentum, slow loops give them purpose. Fixed rewards teach, random ones hook.</p></div>
+    <div class="card fragment rise"><p style="font-size:28px"><strong class="hl-mint">Feedback must be immediate, clear, layered and accessible.</strong> Every input needs an answer.</p></div>
+    <div class="card fragment rise"><p style="font-size:28px"><strong class="hl-violet">Gamification is more than PBL.</strong> Challenge, quests, social play and identity reach intrinsic motivation.</p></div>
+    <div class="card fragment rise"><p style="font-size:28px"><strong class="hl-coral">Would they choose it if they understood it?</strong> If not, it's a dark pattern.</p></div>
+  </div>
+</section>
+
+<!-- ========================================================= 06 ROLL FOR REWARD -->
+<section class="divider" data-chrome="off">
+  <div class="sec-num">06</div>
+  <h2>Roll for<br>Reward</h2>
+  <p class="lead">A dice game in four rounds. Each round adds a new kind of reward.</p>
+</section>
+
+<section data-section="06 · Roll for Reward">
+  <span class="kicker gold">Set-up · 3 minutes</span>
+  <h2>Tables of 4–5</h2>
+  <div class="grid-2" style="gap:28px">
+    <div class="card">
+      <span class="tag">Kit per table</span>
+      <ul class="rules-list">
+        <li><strong>Two six-sided dice</strong> in different colours: the <strong>main die</strong> and the <strong>modifier</strong></li>
+        <li><strong>One eight-sided die</strong> (no d8? roll a d6 and add 2)</li>
+        <li><strong>About 15 duck tokens</strong>: counters, coins or paper squares</li>
+        <li>A <strong>score sheet</strong> and pen each</li>
+      </ul>
+    </div>
+    <div class="stack">
+      <div class="card gold"><span class="tag">How a round works</span><p>Take turns clockwise. Everyone gets <strong>5 turns</strong> in Rounds 1–2 and <strong>6 turns</strong> in Rounds 3–4. Highest score at the table wins the round and gets a <strong>★</strong>.</p></div>
+      <div class="card blue"><span class="tag">After every round</span><p>Rate it on your sheet, on your own: <strong>fun</strong> (1–7) and <strong>I wanted another turn</strong> (1–7).</p></div>
+    </div>
+  </div>
+  <p class="lead mt-m" style="font-size:26px"><span class="muted">Rather not play? Be the table's scorekeeper and watch for the moments people get excited.</span></p>
+</section>
+
+<section data-section="06 · Roll for Reward">
+  <span class="round-tag" style="background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue)">Round 1 · Fixed</span>
+  <h2 class="mt-s">Roll the main die. Score what you roll.</h2>
+  <div class="grid-3">
+    <div class="card"><span class="big">1–6</span><p>Every roll scores its face value, straight away.</p></div>
+    <div class="card"><span class="big">5 turns</span><p>Add up your five rolls. Highest at the table gets the ★.</p></div>
+    <div class="card"><span class="big">No choices</span><p>Nothing to decide. Just roll.</p></div>
+  </div>
+  <p class="lead mt-l">Average score: about <strong>17</strong>. Nobody can do much about it.</p>
+</section>
+
+<section data-section="06 · Roll for Reward">
+  <span class="round-tag" style="background:var(--coral-soft);color:var(--coral);border:1px solid var(--coral)">Round 2 · Variety</span>
+  <h2 class="mt-s" style="margin-bottom:20px">Now what you roll decides what you get</h2>
+  <div class="split" style="grid-template-columns:1.25fr .75fr;align-items:start">
+    <table class="t dice-table">
+      <tr><th style="width:150px">Main die</th><th>What happens</th></tr>
+      <tr><td>1</td><td><strong class="hl">Tier up:</strong> no points, but roll the <strong>d8</strong> as your main die for the rest of the round</td></tr>
+      <tr><td>2, 4</td><td>Score it</td></tr>
+      <tr><td>3, 5</td><td>Score it, then roll the <strong>modifier</strong>: <span class="hl-mint">4–6 add it</span>, <span class="hl-coral">1–3 take it away</span></td></tr>
+      <tr><td>6</td><td><strong class="hl-gold">Take a duck.</strong> No points now.</td></tr>
+      <tr><td>7, 8</td><td>d8 only: score it</td></tr>
+    </table>
+    <div class="card gold">
+      <span class="tag">Ducks · scored at the end of the round</span>
+      <p><span class="big" style="font-size:40px">4 each</span></p>
+      <p>Own <strong>three or more</strong> and every duck is worth <strong>5</strong>.</p>
+      <p class="small">Ducks stay yours: nothing takes them away.</p>
+    </div>
+  </div>
+</section>
+
+<section data-section="06 · Roll for Reward">
+  <span class="round-tag" style="background:var(--mint-soft);color:var(--mint);border:1px solid var(--mint)">Round 3 · Risk</span>
+  <h2 class="mt-s" style="margin-bottom:24px">Round 2 rules, plus a pot you can lose</h2>
+  <div class="pot-bank">
+    <div class="card coral"><span class="tag">Pot · at risk</span><p style="font-size:24px">Points you roll go into your <strong>pot</strong>. Roll a <strong>1</strong> (on either main die) and you <strong>bust</strong>: lose the whole pot. You still tier up.</p></div>
+    <div class="arrow">→</div>
+    <div class="card mint"><span class="tag">Bank · safe</span><p style="font-size:24px">On your turn you can <strong>bank instead of rolling</strong>: move your pot into your bank. Banked points can't be lost.</p></div>
+  </div>
+  <div class="grid-3 mt-m">
+    <p class="ink2" style="font-size:24px"><strong>6 turns.</strong> A bank uses a turn.</p>
+    <p class="ink2" style="font-size:24px"><strong>End of round:</strong> bank + pot + ducks.</p>
+    <p class="ink2" style="font-size:24px"><strong>Ducks are always safe.</strong></p>
+  </div>
+</section>
+
+<section data-section="06 · Roll for Reward">
+  <span class="round-tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid var(--gold)">Round 4 · Spotlight</span>
+  <h2 class="mt-s">Round 3 rules. Now the whole room is watching.</h2>
+  <div class="grid-2" style="gap:28px">
+    <div class="card blue"><span class="tag">Leaderboard</span><span class="big" style="font-size:40px">Class-wide</span><p>Scores go up on screen against every table, not just yours.</p></div>
+    <div class="card gold"><span class="tag">Winner</span><span class="big" style="font-size:40px">Top of the room</span><p>The top score in the class is announced as the winner. Ties: a roll-off.</p></div>
+  </div>
+  <p class="lead mt-l">Same dice, same rules. <strong>Does it feel different?</strong></p>
+</section>
+
+<section data-section="06 · Roll for Reward">
+  <span class="kicker">The design, read as a design</span>
+  <h2>What each round adds</h2>
+  <table class="t" style="font-size:23px">
+    <tr><th style="width:180px">Round</th><th>Adds</th><th>Reward ideas from today</th><th style="width:330px">Watch for</th></tr>
+    <tr><td><span class="hl">1 Fixed</span></td><td>Points for every roll</td><td>Short-term · fixed · continuous</td><td>Flat by the third turn?</td></tr>
+    <tr><td><span class="hl-coral">2 Variety</span></td><td>Tier-up, ± modifier, ducks</td><td>Random · tiered · collectible set</td><td>Cheering at the table</td></tr>
+    <tr><td><span class="hl-mint">3 Risk</span></td><td>Pot, bust, bank</td><td>Agency · risk vs reward · loss</td><td>Who banks early, and why</td></tr>
+    <tr><td><span class="hl-gold">4 Spotlight</span></td><td>Class leaderboard, a winner</td><td>Extrinsic · social comparison · glory</td><td>Does the ranking help, or kill, the fun?</td></tr>
+  </table>
+  <p class="lead mt-m">Every round keeps the ★ milestone: the table winner after the last turn.</p>
+</section>
+
+<section data-section="06 · Predict">
+  <span class="kicker">Predict first</span>
+  <h2>Which round will <em>you</em> rate highest?</h2>
+  <p class="ink2">Write your prediction on your sheet before you play. Use your Hexad type from Week 1.</p>
+  <div class="grid-3 mt-s" style="gap:20px">
+    <div class="card"><span class="tag">Achiever</span><p>Round 3: mastery of a real decision.</p></div>
+    <div class="card"><span class="tag">Free Spirit</span><p>Round 2: surprise, novelty, ducks.</p></div>
+    <div class="card"><span class="tag">Player</span><p>Round 4: there's a winner to be.</p></div>
+    <div class="card"><span class="tag">Socialiser</span><p>Round 4: the whole room is in it.</p></div>
+    <div class="card"><span class="tag">Disruptor</span><p>Round 3: risk, and bending the odds.</p></div>
+    <div class="card"><span class="tag">Philanthropist</span><p>Least moved by the ranking?</p></div>
+  </div>
+</section>
+
+<section data-section="06 · Play it">
+  <span class="round-tag" style="background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue)">Round 1 · Fixed · 5 turns</span>
+  <div class="play-grid mt-m">
+    <div class="card">
+      <span class="tag">Rules</span>
+      <ul><li>Roll the main die. <strong>Score what you roll.</strong></li><li>5 turns each, clockwise.</li><li>Highest at the table: <strong>★</strong></li></ul>
+    </div>
+    <div class="stack">
+      <div><span class="timer" data-seconds="180">3:00</span> <span class="small" style="margin-left:12px">click to start</span></div>
+      <div class="card blue"><span class="tag">When you finish</span><p>Rate Round 1: fun (1–7) and wanted another turn (1–7).</p></div>
+    </div>
+  </div>
+</section>
+
+<section data-section="06 · Play it">
+  <span class="round-tag" style="background:var(--coral-soft);color:var(--coral);border:1px solid var(--coral)">Round 2 · Variety · 5 turns</span>
+  <div class="play-grid mt-m">
+    <table class="t dice-table">
+      <tr><td>1</td><td><strong class="hl">Tier up</strong>: switch to the d8, no points</td></tr>
+      <tr><td>2, 4</td><td>Score it</td></tr>
+      <tr><td>3, 5</td><td>Score it, then modifier: <span class="hl-mint">4–6 add</span>, <span class="hl-coral">1–3 subtract</span></td></tr>
+      <tr><td>6</td><td><strong class="hl-gold">Take a duck</strong></td></tr>
+      <tr><td>7, 8</td><td>Score it</td></tr>
+    </table>
+    <div class="stack">
+      <div><span class="timer" data-seconds="240">4:00</span></div>
+      <div class="card gold"><span class="tag">Ducks at the end</span><p>4 each · 5 each if you have 3+</p></div>
+      <div class="card blue"><span class="tag">Then</span><p>Rate Round 2.</p></div>
+    </div>
+  </div>
+</section>
+
+<section data-section="06 · Play it">
+  <span class="round-tag" style="background:var(--mint-soft);color:var(--mint);border:1px solid var(--mint)">Round 3 · Risk · 6 turns</span>
+  <div class="play-grid mt-m">
+    <div class="card">
+      <span class="tag">Round 2 rules, plus</span>
+      <ul>
+        <li>Points go into your <strong>pot</strong>.</li>
+        <li>Roll a <strong>1</strong>: <strong class="hl-coral">bust</strong>, lose the pot (and tier up).</li>
+        <li>Or, instead of rolling: <strong class="hl-mint">bank</strong> the pot. Safe for good.</li>
+        <li>End: bank + pot + ducks.</li>
+      </ul>
+    </div>
+    <div class="stack">
+      <div><span class="timer" data-seconds="300">5:00</span></div>
+      <div class="card blue"><span class="tag">Then</span><p>Rate Round 3.</p></div>
+    </div>
+  </div>
+</section>
+
+<section data-section="06 · Play it">
+  <span class="round-tag" style="background:var(--gold-soft);color:var(--gold);border:1px solid var(--gold)">Round 4 · Spotlight · 6 turns</span>
+  <div class="play-grid mt-s" style="grid-template-columns:.9fr 1.1fr">
+    <div class="stack">
+      <div class="card"><span class="tag">Round 3 rules, plus</span><ul><li>Every score goes on the <strong>class leaderboard</strong>.</li><li>Top score in the room is the <strong>winner</strong>.</li></ul></div>
+      <div><span class="timer" data-seconds="300">5:00</span></div>
+      <div class="card blue"><span class="tag">Then</span><p>Rate Round 4. Call out your ID and score.</p></div>
+    </div>
+    <div class="lb" id="leaderboard">
+      <form autocomplete="off"><input class="id" placeholder="ID" maxlength="10" aria-label="Player ID"><input class="sc" type="number" placeholder="score" aria-label="Score"><button class="add" type="submit">Add</button><button class="clear" type="button">Clear</button></form>
+      <ol></ol>
+      <p class="empty">Scores appear here, highest first.</p>
+    </div>
+  </div>
+</section>
+
+<section class="center-v" data-section="06 · Play it" data-chrome="off">
+  <h2 style="font-size:96px">That's the game.<br>Thanks for playing.</h2>
+  <p class="lead mt-m">Leave the dice where they are.</p>
+</section>
+
+<section data-section="06 · Debrief">
+  <span class="kicker gold">Debrief · 10 minutes</span>
+  <h2 style="margin-bottom:26px">Which round was most fun?</h2>
+  <div class="grid-2" style="grid-template-columns:1.05fr .95fr;gap:36px">
+    <div class="tally" id="tally">
+      <span class="lab">1 Fixed</span><div class="track"><i style="background:var(--blue)"></i></div><span class="n">0</span><span class="btns"><button>−</button><button>+</button></span>
+      <span class="lab">2 Variety</span><div class="track"><i style="background:var(--coral)"></i></div><span class="n">0</span><span class="btns"><button>−</button><button>+</button></span>
+      <span class="lab">3 Risk</span><div class="track"><i style="background:var(--mint)"></i></div><span class="n">0</span><span class="btns"><button>−</button><button>+</button></span>
+      <span class="lab">4 Spotlight</span><div class="track"><i style="background:var(--gold)"></i></div><span class="n">0</span><span class="btns"><button>−</button><button>+</button></span>
+    </div>
+    <div class="card">
+      <span class="tag">Discuss</span>
+      <ul style="font-size:23px">
+        <li>Was <strong>most fun</strong> also where you most <strong>wanted another turn</strong>?</li>
+        <li>Did the <strong>class ranking</strong> add fun, or pressure?</li>
+        <li>Why did <strong>ducks</strong> feel worth more than 4 points?</li>
+        <li>How did a <strong>bust</strong> feel, compared with a low roll?</li>
+        <li>Who <strong>banked early</strong>? Was it the right call?</li>
+        <li>Who kept rolling after we <strong>stopped</strong>?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================= 07 DESIGN TASK -->
+<section class="divider" data-chrome="off">
+  <div class="sec-num">07</div>
+  <h2>Design task:<br>your reward system</h2>
+  <p class="lead">From the activity sheet: analyse, design, pitch</p>
+</section>
+
+<section data-section="07 · Design task">
+  <span class="kicker gold">Part A · pairs · 10 minutes</span>
+  <h2 style="margin-bottom:22px">Fifteen mechanics, three each</h2>
+  <p class="ink2" style="font-size:25px">Pair <strong>n</strong> takes mechanics <strong>n</strong>, <strong>n + 5</strong> and <strong>n + 10</strong> from the sheet. For each one: a game that does it well, its rewards and loops, and who it's for.</p>
+  <table class="t" style="font-size:21px">
+    <tr><th>Mechanic</th><th>Game</th><th>Rewards</th><th>Loop · schedule</th><th>Bartle</th><th>Hexad</th></tr>
+    <tr><td>6 · Exploration &amp; discovery</td><td>Zelda: Breath of the Wild, Korok seeds</td><td>"Yahaha!" + seed → Hestu expands your inventory (facility)</td><td>Fast: find one in minutes. Slow: trade seeds. Variable: any rock might hide one.</td><td>Explorer</td><td>Free Spirit</td></tr>
+  </table>
+  <div class="card gold mt-m fragment rise"><p style="font-size:24px;margin:0">Find all 900 and Hestu's final gift is… a golden poop. <strong>The finding was the reward all along.</strong></p></div>
+</section>
+
+<section data-section="07 · Design task">
+  <span class="kicker gold">Part B · groups of 3–4 · 25 minutes</span>
+  <h2>Design a prototype around one mechanic</h2>
+  <div class="grid-2" style="gap:36px">
+    <ol class="brief">
+      <li><b>One intrinsic reward:</b> what feels good in itself</li>
+      <li><b>One extrinsic reward:</b> glory, sustenance, access or facility</li>
+      <li><b>A fast loop</b> and <b>a slow loop</b> that it feeds</li>
+      <li><b>A named schedule</b>: fixed or variable, ratio or interval</li>
+    </ol>
+    <ol class="brief" start="5">
+      <li><b>One feedback moment</b>, layered across at least two senses</li>
+      <li><b>Who it's for:</b> Bartle and Hexad types</li>
+      <li><b>An ethics check:</b> one dark pattern you <em>could</em> have used, and why you didn't</li>
+    </ol>
+  </div>
+  <p class="lead mt-m">Draw the loop diagram first. Everything else hangs off it.</p>
+</section>
+
+<section data-section="07 · Design task">
+  <div class="split" style="grid-template-columns:1fr 1fr">
+    <svg class="fig" viewBox="0 0 660 620" role="img" aria-label="Driftwood's two loops: a fast beachcombing loop inside a slow crafting and island loop">
+      <defs><marker id="dm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8d98bf"/></marker></defs>
+      <circle cx="330" cy="310" r="265" fill="none" stroke="#3aa8ff" stroke-width="3" stroke-dasharray="6 8"/>
+      <circle cx="330" cy="310" r="125" fill="rgba(255,197,61,.08)" stroke="#ffc53d" stroke-width="3" stroke-dasharray="6 8"/>
+      <text x="330" y="290" text-anchor="middle" fill="#ffc53d" font-size="19" style="font-family:var(--mono)">FAST · SECONDS</text>
+      <text x="330" y="318" text-anchor="middle" fill="#eef2ff" font-size="22">comb the beach</text>
+      <text x="330" y="346" text-anchor="middle" fill="#c3cbe6" font-size="18">find → chime → carry</text>
+      <g font-size="21" text-anchor="middle">
+        <rect x="245" y="20" width="170" height="46" rx="23" fill="#0b1026" stroke="#3aa8ff" stroke-width="2"/><text x="330" y="50" fill="#eef2ff">craft a part</text>
+        <rect x="505" y="287" width="150" height="46" rx="23" fill="#0b1026" stroke="#3aa8ff" stroke-width="2"/><text x="580" y="317" fill="#eef2ff">better tool</text>
+        <rect x="235" y="552" width="190" height="46" rx="23" fill="#0b1026" stroke="#3aa8ff" stroke-width="2"/><text x="330" y="582" fill="#eef2ff">sail to new island</text>
+        <rect x="5" y="287" width="150" height="46" rx="23" fill="#0b1026" stroke="#3aa8ff" stroke-width="2"/><text x="80" y="317" fill="#eef2ff">new finds</text>
+      </g>
+      <text x="330" y="140" text-anchor="middle" fill="#3aa8ff" font-size="19" style="font-family:var(--mono)">SLOW · HOURS</text>
+    </svg>
+    <div>
+      <span class="kicker">Worked example · gathering &amp; crafting</span>
+      <h2 style="font-size:56px;margin-bottom:18px">Driftwood</h2>
+      <table class="t" style="font-size:20px">
+        <tr><td>Intrinsic</td><td>Curiosity about what the tide brings; mastering tide timing</td></tr>
+        <tr><td>Extrinsic</td><td>Tool tiers (facility), new islands (access), a collection log (glory)</td></tr>
+        <tr><td>Schedule</td><td>Common finds every pass (fixed); rare shells by variable ratio, odds shown</td></tr>
+        <tr><td>Feedback</td><td>Chime + sparkle + controller pulse; rare finds get their own sound</td></tr>
+        <tr><td>Players</td><td>Explorers, Achievers · Free Spirits</td></tr>
+        <tr><td>Ethics</td><td>Tides run on game time, not real time: no "come back in 4 hours"</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section data-section="07 · Design task">
+  <span class="kicker gold">Part C · pitch</span>
+  <h2>Three slides, three minutes</h2>
+  <div class="grid-3">
+    <div class="card blue"><span class="tag">Slide 1</span><h4>The game</h4><p>Mechanic, player fantasy, one-line pitch.</p></div>
+    <div class="card gold"><span class="tag">Slide 2</span><h4>The loops</h4><p>Your diagram: fast loop, slow loop, schedule, rewards.</p></div>
+    <div class="card mint"><span class="tag">Slide 3</span><h4>Players &amp; ethics</h4><p>Who it's for, the feedback moment, the dark pattern you refused.</p></div>
+  </div>
+  <p class="lead mt-l">Let the loop diagram do the talking: if it's clear, the pitch is easy.</p>
+</section>
+
+<section class="center-v" data-section="Exit ticket">
+  <span class="prompt-badge"><span class="dot"></span>Exit ticket</span>
+  <p class="exit-ticket">“A reward system is fair when the player would still choose it if they knew <span class="blank">…</span>.”</p>
+  <p class="lead mt-m">One sentence each, on the back of your score sheet.</p>
+</section>
+
+<section data-section="References">
+  <span class="kicker">References</span>
+  <div class="grid-2 refs" style="gap:40px">
+    <div>
+            <p>Deci, E. L., Koestner, R. and Ryan, R. M. (1999) 'A meta-analytic review of experiments examining the effects of extrinsic rewards on intrinsic motivation', <em>Psychological Bulletin</em>, 125(6), pp. 627–668.</p>
+      <p>Deterding, S., Dixon, D., Khaled, R. and Nacke, L. (2011) 'From game design elements to gamefulness: defining "gamification"', <em>Proceedings of MindTrek '11</em>, pp. 9–15.</p>
+      <p>Drummond, A. and Sauer, J. D. (2018) 'Video game loot boxes are psychologically akin to gambling', <em>Nature Human Behaviour</em>, 2(8), pp. 530–532.</p>
+      <p>Ferster, C. B. and Skinner, B. F. (1957) <em>Schedules of Reinforcement</em>. New York: Appleton-Century-Crofts.</p>
+      <p>Hallford, N. and Hallford, J. (2001) <em>Swords and Circuitry: A Designer's Guide to Computer Role-Playing Games</em>. Roseville, CA: Prima Tech.</p>
+      <p>Jonasson, M. and Purho, P. (2012) 'Juice it or lose it' [conference talk]. Nordic Game 2012. Available at: https://www.youtube.com/watch?v=Fy0aCDmgnxg.</p>
+      <p>Kahneman, D. and Tversky, A. (1979) 'Prospect theory: an analysis of decision under risk', <em>Econometrica</em>, 47(2), pp. 263–291.</p>
+    </div>
+    <div>
+      <p>Lepper, M. R., Greene, D. and Nisbett, R. E. (1973) 'Undermining children's intrinsic interest with extrinsic reward', <em>Journal of Personality and Social Psychology</em>, 28(1), pp. 129–137.</p>
+      <p>McGinnis, T., Bustard, D. W., Black, M. and Charles, D. (2008) 'Enhancing e-learning engagement using design patterns from computer games', <em>Proceedings of the 1st International Conference on Advances in Computer-Human Interaction (ACHI 2008)</em>. doi:10.1109/ACHI.2008.43.</p>
+      <p>Marczewski, A. (2015) <em>Even Ninja Monkeys Like to Play: Gamification, Game Thinking and Motivational Design</em>.</p>
+      <p>Ryan, R. M. and Deci, E. L. (2000) 'Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being', <em>American Psychologist</em>, 55(1), pp. 68–78.</p>
+      <p>Swink, S. (2009) <em>Game Feel: A Game Designer's Guide to Virtual Sensation</em>. Burlington, MA: Morgan Kaufmann.</p>
+      <p>Werbach, K. and Hunter, D. (2012) <em>For the Win: How Game Thinking Can Revolutionize Your Business</em>. Philadelphia: Wharton Digital Press.</p>
+      <p>Zagal, J. P., Björk, S. and Lewis, C. (2013) 'Dark patterns in the design of games', <em>Proceedings of Foundations of Digital Games 2013</em>.</p>
+      <p>Zendle, D. and Cairns, P. (2018) 'Video game loot boxes are linked to problem gambling: results of a large-scale survey', <em>PLOS ONE</em>, 13(11), e0206767.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="../lib/reveal.js"></script>
+<script src="../lib/cre342.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1600, height: 900, margin: 0, minScale: 0.2, maxScale: 2,
+    center: false, hash: true, controls: true, controlsTutorial: false, progress: true,
+    slideNumber: 'c/t', transition: 'fade', transitionSpeed: 'fast', backgroundTransition: 'fade',
+    display: 'flex', preloadIframes: false, plugins: []
+  });
+  CRE342.init();
+
+  // Round 4 class leaderboard: saved in this browser only
+  (function () {
+    const el = document.getElementById('leaderboard'); if (!el) return;
+    const KEY = 'cre342-w3-leaderboard';
+    let rows = [];
+    try { rows = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { rows = []; }
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(rows)); } catch (e) {} };
+    const ol = el.querySelector('ol'), empty = el.querySelector('.empty');
+    const id = el.querySelector('.id'), sc = el.querySelector('.sc');
+    const render = () => {
+      rows.sort((a, b) => b.s - a.s);
+      ol.innerHTML = '';
+      rows.slice(0, 12).forEach((r, i) => {
+        const li = document.createElement('li');
+        li.innerHTML = '<span></span><span class="s"></span><span class="x" title="Remove">×</span>';
+        li.children[0].textContent = r.id; li.children[1].textContent = r.s;
+        li.querySelector('.x').addEventListener('click', () => { rows.splice(i, 1); save(); render(); });
+        ol.appendChild(li);
+      });
+      empty.style.display = rows.length ? 'none' : '';
+    };
+    el.querySelector('form').addEventListener('submit', e => {
+      e.preventDefault();
+      const s = parseInt(sc.value, 10);
+      if (!id.value.trim() || isNaN(s)) return;
+      rows.push({ id: id.value.trim(), s }); save(); render();
+      id.value = ''; sc.value = ''; id.focus();
+    });
+    el.querySelector('.clear').addEventListener('click', () => { rows = []; save(); render(); });
+    render();
+  })();
+
+  // Debrief vote tally
+  (function () {
+    const el = document.getElementById('tally'); if (!el) return;
+    const n = [0, 0, 0, 0];
+    const bars = el.querySelectorAll('.track i'), nums = el.querySelectorAll('.n');
+    const render = () => { const max = Math.max(1, ...n); n.forEach((v, i) => { bars[i].style.width = (v / max * 100) + '%'; nums[i].textContent = v; }); };
+    el.querySelectorAll('.btns').forEach((b, i) => {
+      const [minus, plus] = b.querySelectorAll('button');
+      minus.addEventListener('click', () => { n[i] = Math.max(0, n[i] - 1); render(); });
+      plus.addEventListener('click', () => { n[i]++; render(); });
+    });
+    render();
+  })();
+</script>
+</body>
+</html>
